@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.app.dao.Dev_UserMapper">
+  
+  <select id="getLoginUser" resultType="Dev_User" parameterType="string">
+    SELECT * FROM dev_user WHERE devCode = #{devCode}
+  </select>
+  <!--开发者帐号 devCode ·开发者名称 devName  ·开发者密码 devPassword  ·邮箱 devEmail  ·开发者简介 devInfo（textarea) ·创建时间 creationDate（添加时在代码中写）-->
+  <insert id="insertUser" parameterType="Dev_User">
+  	insert into dev_user(devCode,devName,devPassword,devEmail,devInfo)
+values(#{devcode,jdbcType=VARCHAR},#{devname,jdbcType=VARCHAR},
+#{devpassword,jdbcType=VARCHAR},#{devemail,jdbcType=VARCHAR},
+#{devinfo,jdbcType=VARCHAR})
+  </insert>
+</mapper> 
