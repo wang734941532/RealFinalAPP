@@ -209,18 +209,32 @@
                               <c:set var="so1" value="${info.categorylevel1 }" scope="session"></c:set>
                               <c:set var="so2" value="${info.categorylevel2 }" scope="session"></c:set>
                               <c:set var="so3" value="${info.categorylevel3 }" scope="session"></c:set>
-                              <% 
+                               <c:set var="so4" value="${info.flatformid +10}" scope="session"></c:set>
+                                <c:set var="so5" value="${info.status }" scope="session"></c:set>
+                              
+                              <%
+                              //APP索引
                               Map map = (HashMap)session.getAttribute("map");
+                              //APP状态封装
+                               Map dicMap = (HashMap)session.getAttribute("dicMap");
+                               //APP平台
+								 Map plamap = (HashMap)session.getAttribute("plaMap");
+                              
                                Object a = session.getAttribute("so1");
                                Object b = session.getAttribute("so2");
                                Object c = session.getAttribute("so3");
+                               Object d = session.getAttribute("so4");
+                               Object e = session.getAttribute("so5");
+                               
                                	Object s1 =  map.get(a);
                             	Object s2 =  map.get(b);
                             	Object s3 =  map.get(c);
+                            	Object s4 =  plamap.get(d);
+                            	Object s5 =  dicMap.get(e);
                               %>
                               <p><strong>level: </strong> <%=s1%>/ <%=s2%> /<%=s3 %>   </p>
                               <ul class="list-unstyled">
-                                <li><i class="fa "></i> Platform:${info.flatformid } </li>
+                                <li><i class="fa "></i> Platform:<%=s4 %> </li>
                                 <li><i class="fa "></i> Size: ${info.softwaresize }M</li>
                                 <li><i class="fa "></i> Downloads:${info.downloads } </li>
                               </ul>
@@ -238,7 +252,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-6 emphasis">
                               <button type="button" class="btn btn-success btn-xs">
-                                			 <i class="fa fa-android"> </i> 	待审核</button>
+                                			 <i class="fa fa-android"> </i> <%=s5 %></button>
                                 			 
                  <div class="btn-group">
                       <button type="button" class="btn btn-danger"><a href="${pageContext.request.contextPath }/manager/v_display?id=${info.id}"><strong>审核</strong></a></button>
@@ -260,7 +274,7 @@
           </div>
        <p align="right"> 当前页数:[${now_page }/${ totalPages}]&nbsp; 
        
-       <c:if test="${now_page <= totalPages}">
+       <c:if test="${now_page < totalPages}">
        
        <a href="${pageContext.request.contextPath }/manager/page?p=${now_page+1}">下一页</a>
        

@@ -38,4 +38,9 @@ public class DictionaryServiceImpl implements DictionaryService {
 		return dictionaryMapper.getAppFlatForm();
 	}
 
+	@Override
+	public List<Dictionary> getpublicStatus() {
+		return dictionaryMapper.getpublicStatus();
+	}
+
 }

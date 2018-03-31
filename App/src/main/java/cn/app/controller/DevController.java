@@ -68,6 +68,8 @@ public class DevController {
 	public String maintenance(HttpSession session,Model model) {
 		
 				List<Information> infoList = null;
+				
+				//APP分类封装，key获取
 				List<Category> catList = null;
 				Map map = null;
 				if(session.getAttribute("map") == null){
@@ -83,6 +85,62 @@ public class DevController {
 					map = (HashMap)session.getAttribute("map");
 					
 				}
+				//分类封装，key获取---end
+				//----------------------------------------------------
+				//APP状态封装
+				List<Dictionary> dicList = null;
+				Map dicMap = null;
+				if(session.getAttribute("dicMap") == null){
+					dicList = dictionaryService.getDictionaryListByStatus();
+					dicMap =new HashMap();
+					
+						for(Dictionary d : dicList) {
+						
+						Object dicKey = (Object)d.getValueid();
+						dicMap.put(dicKey, d.getValuename());
+					}
+				}else{
+					dicMap= (HashMap)session.getAttribute("dicMap");
+				}
+				
+				//APP平台封装
+				List<Dictionary> PLATList = null;
+				Map plaMap = null;
+				
+				if(session.getAttribute("plaMap") == null){
+					PLATList = dictionaryService.getAppFlatForm();
+					plaMap =new HashMap();
+					
+						for(Dictionary d : PLATList) {
+						
+						Object plaKey = (Object)d.getId();
+						plaMap.put(plaKey, d.getValuename());
+					}
+				}else{
+					plaMap= (HashMap)session.getAttribute("plaMap");
+				}
+				
+				
+				//APP发布封装
+				//发布状态
+				List<Dictionary> pubList = null;
+				Map pubMap = null;
+				if(session.getAttribute("pubMap") == null){
+					pubList = dictionaryService.getpublicStatus();
+					pubMap =new HashMap();
+					
+						for(Dictionary d : pubList) {
+						
+						Object plaKey = (Object)d.getId();
+						pubMap.put(plaKey, d.getValuename());
+					}
+				}else{
+					pubMap= (HashMap)session.getAttribute("pubMap");
+				}
+				
+				
+				
+				
 				int pageCount = 0;
 				int pageSize = 6;
 				int TotalCount ;
@@ -100,6 +158,9 @@ public class DevController {
 					
 					session.setAttribute("categoryList", catList);
 					session.setAttribute("map", map);
+					session.setAttribute("dicMap", dicMap);
+					session.setAttribute("plaMap", plaMap);
+					session.setAttribute("pubMap", pubMap);
 					session.setAttribute("pageCount", pageCount);
 					session.setAttribute("pageSize", pageSize);
 					session.setAttribute("TotalCount", TotalCount);
@@ -200,6 +261,49 @@ public class DevController {
 		return "dev/look";
 	}
 	
+	
+	@RequestMapping("/page")
+	public String page(int p,HttpSession session,Model model) {
+		
+		List<Information> infoList = null;
+		
+		List<Category> catList = null;
+		Map map = new HashMap();
+		int pageCount ;
+		int pageSize = 6;
+		int TotalCount ;
+		int totalPages; 
+		int now_page =p ;
+		try {
+			
+			TotalCount = infoService.getInfoCount();
+			totalPages = (TotalCount%pageSize > 0) ? TotalCount/pageSize +1 : TotalCount/pageSize;
+			pageCount = pageSize*(now_page-1);
+			
+			infoList = infoService.getInfoList(pageCount, pageSize);
+			model.addAttribute("infoList", infoList);
+			
+			catList = categoryService.getCategoryList();
+			for(Category c : catList) {
+				Object d = (Object)(c.getId());
+				map.put(d, c.getCategoryname());
+			}
+			
+			session.setAttribute("categoryList", catList);
+			session.setAttribute("map", map);
+			session.setAttribute("pageCount", pageCount);
+			session.setAttribute("pageSize", pageSize);
+			session.setAttribute("TotalCount", TotalCount);
+			session.setAttribute("totalPages", totalPages);
+			session.setAttribute("now_page", now_page);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("DevController_error--------------");
+		}
+		
+		return "dev/dev_app_maintenance";
+	}
 	
 	
 	

@@ -11,5 +11,7 @@ public interface DictionaryService {
 	 public List<Dictionary> getAppStatus();
 	 //用于ajax查询平台
 	 public List<Dictionary> getAppFlatForm();
+	 
+	 public List<Dictionary>  getpublicStatus();
 
 }

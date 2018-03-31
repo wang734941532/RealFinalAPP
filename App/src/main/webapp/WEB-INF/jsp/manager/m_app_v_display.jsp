@@ -3,6 +3,7 @@
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -215,6 +216,7 @@ String basePath = request.getScheme() + "://"
                     <br />
                     <form id="demo-form2" data-parsley-validate  class="form-horizontal form-label-left">
 
+
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="softName">软件名称<span class="required">*</span>
                         </label>
@@ -252,37 +254,41 @@ String basePath = request.getScheme() + "://"
                           <input id="downloads" class="form-control col-md-7 col-xs-12" value="${info.downloads }" readonly  type="text" name="downloads">
                         </div>
                       </div>
-                      
+              
                       			
                       			
                        		  <c:set var="so1" value="${info.categorylevel1 }" scope="session"></c:set>
                               <c:set var="so2" value="${info.categorylevel2 }" scope="session"></c:set>
                               <c:set var="so3" value="${info.categorylevel3 }" scope="session"></c:set>
                               
-                              <c:set var="so4" value="${info.flatformid }"  scope="session"></c:set>
-                      			
-                           
+                              <c:set var="so4" value="${info.status }"  scope="session"></c:set>
+							 <c:set var="so5" value="${info.flatformid +10 }"  scope="session"></c:set>
+					 		<c:set var="so6" value="${version.publishstatus + 13 }"  scope="session"></c:set>
                               <% 
                               Map map = (HashMap)session.getAttribute("map");
                               Map dicMap = (HashMap)session.getAttribute("dicMap");
-                              
-                              
+                              Map plamap = (HashMap)session.getAttribute("plaMap");
+                              Map pubMap = (HashMap)session.getAttribute("pubMap");
                               
                                Object a = session.getAttribute("so1");
                                Object b = session.getAttribute("so2");
                                Object c = session.getAttribute("so3");
-                           	  Object d = (Object)session.getAttribute("so4");
-                           		
+                               Object d = session.getAttribute("so4");
+                               Object e = session.getAttribute("so5");
+                               Object f = session.getAttribute("so6");
+                               
                                	Object s1 =  map.get(a);
                             	Object s2 =  map.get(b);
                             	Object s3 =  map.get(c);
-                            	Object s4 =  (Object)map.get(d);
+                            	Object s4 =  dicMap.get(d);
+                           		Object s5 =  plamap.get(e);
+                           		Object s6 =  pubMap.get(f);
                               %>
                               
                       <div class="form-group">
                         <label for="platform" class="control-label col-md-3 col-sm-3 col-xs-12">所属平台<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="platform" class="form-control col-md-7 col-xs-12" value="手机" readonly  type="text" name="platform">
+                          <input id="platform" class="form-control col-md-7 col-xs-12" value="<%=s5 %>" readonly  type="text" name="platform">
                         </div>
                       </div>
                       <div class="form-group">
@@ -295,7 +301,7 @@ String basePath = request.getScheme() + "://"
                       <div class="form-group">
                         <label for="status" class="control-label col-md-3 col-sm-3 col-xs-12">APP状态<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="status" class="form-control col-md-7 col-xs-12"  value="${info.status } <%=dicMap %>" readonly type="text" name="status">
+                          <input id="status" class="form-control col-md-7 col-xs-12"  value="<%=s4 %>" readonly type="text" name="status">
                         </div>
                       </div>
                       <div class="form-group">
@@ -320,7 +326,7 @@ String basePath = request.getScheme() + "://"
 				<button type="submit" class="btn btn-success ooo" >审核通过</button>
 				<input type="hidden" name="no1" value="${info.id }" class="passornot">
 				<button type="submit" class="btn btn-success qqq">审核不通过</button>
-				<button type="submit" class="btn btn-primary"><a href="${pageContext.request.contextPath }/manager/validate">返回</a></button>
+				<button type="submit" class="btn btn-success"><a href="${pageContext.request.contextPath }/manager/validate">返回</a></button>
 												</div>
 											</div>
               		
@@ -357,7 +363,7 @@ String basePath = request.getScheme() + "://"
                       <div class="form-group">
                         <label for="versionStatus" class="control-label col-md-3 col-sm-3 col-xs-12">发布状态<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="versionStatus" class="form-control col-md-7 col-xs-12" readonly value="${version.publishstatus } <%=dicMap %>"   type="text" name="versionStatus">
+                          <input id="versionStatus" class="form-control col-md-7 col-xs-12" readonly value="<%=s6 %>"   type="text" name="versionStatus">
                         </div>
                       </div>
                       <div class="form-group">

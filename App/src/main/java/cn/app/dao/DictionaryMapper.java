@@ -22,4 +22,7 @@ public interface DictionaryMapper {
     public List<Dictionary> getAppStatus();
     
     public List<Dictionary> getAppFlatForm();
+    
+    public List<Dictionary>  getpublicStatus();
+    
 }

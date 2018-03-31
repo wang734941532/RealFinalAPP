@@ -13,4 +13,11 @@
   <select id="getAppFlatForm"  resultType="Dictionary">
    SELECT * FROM data_dictionary WHERE typeCode = 'APP_FLATFORM'     
   </select>
+  
+  
+  <select id="getpublicStatus" resultType="Dictionary">
+  SELECT * FROM data_dictionary WHERE typeCode = 'publish_Status' 
+  
+  </select>
+  
 </mapper>

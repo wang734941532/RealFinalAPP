@@ -142,15 +142,52 @@ public class AjaxController {
 	
 	@RequestMapping(value="/query",method=RequestMethod.POST)
 	public String verify8(int app_state,int platform,String softName,int sort1,int sort2,int sort3,Model model){
-		System.out.println(app_state+"========");
-		System.out.println(sort3+"========");
 		List<Information> queryList = infoService.queryInfo(softName, sort1,sort2,sort3);
-		System.out.println(platform);
-		System.out.println(sort2);
 		model.addAttribute("queryList", queryList);
 		return "query";
 	}
 	
 	
+	@RequestMapping(value="/up",method=RequestMethod.GET)
+	@ResponseBody
+	public boolean verify9(int id){
+		System.out.println(id+"id-up");
+		int count;
+		boolean flag = false;
+		Information information =infoService.upOne(id);
+		System.out.println(information);
+		if(information != null) {
+			count = infoService.upload(id);
+			flag = true;
+		}
+		if(information == null) {
+			count = 0;
+			flag = false;
+		}
+		
+		return flag;
+	}
+	
+	
+
+	@RequestMapping(value="/down",method=RequestMethod.GET)
+	@ResponseBody
+	public boolean verify10(int id){
+		System.out.println(id+"id-up");
+		int count;
+		boolean flag = false;
+		Information information =infoService.downOne(id);
+		System.out.println(information);
+		if(information != null) {
+			count = infoService.download(id);
+			flag = true;
+		}
+		if(information == null) {
+			count = 0;
+			flag = false;
+		}
+		
+		return flag;
+	}
 	
 }

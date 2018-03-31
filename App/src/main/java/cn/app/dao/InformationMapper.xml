@@ -61,5 +61,26 @@
  
   </select>
   
+  <select id="upOne"  resultType="Information" parameterType="int">
+  
+  SELECT * FROM app_info WHERE STATUS = 2 AND id =#{id}
+  </select>
+  
+  <update id="upload" parameterType="int">
+  
+   UPDATE  app_info SET STATUS =4 WHERE id =#{id}
+  
+  </update>
+  
+  <select id="downOne" resultType="Information" parameterType="int">
+  
+  SELECT * FROM app_info WHERE STATUS = 4 AND id =#{id}
+  </select>
+  
+  <update id="download" parameterType="int">
+  
+   UPDATE  app_info SET STATUS =5 WHERE id =#{id}
+  
+  </update>
   
 </mapper>

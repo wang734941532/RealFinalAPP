@@ -12,4 +12,6 @@ public interface CategoryService {
 	 List<Category> getSortOne();
 	 //子带目录查询
 	 List<Category> getSortTwo(int ParentId);
+	 
+	 
 }

@@ -66,6 +66,7 @@ public class BackController {
 		//待审核
 		int statusId =1 ;
 		List<Information> infoList = null;
+		//APP分类封装，key获取
 		List<Category> catList = null;
 		Map map = null;
 		if(session.getAttribute("map") == null){
@@ -77,11 +78,54 @@ public class BackController {
 			}
 			
 		}else{
-			
 			map = (HashMap)session.getAttribute("map");
-			
-			
 		}
+		
+		//APP状态封装
+		List<Dictionary> dicList = null;
+		Map dicMap = null;
+		if(session.getAttribute("dicMap") == null){
+			dicList = dictionaryService.getDictionaryListByStatus();
+			dicMap =new HashMap();
+			
+				for(Dictionary d : dicList) {
+				
+				Object dicKey = (Object)d.getValueid();
+				dicMap.put(dicKey, d.getValuename());
+			}
+		}else{
+			dicMap= (HashMap)session.getAttribute("dicMap");
+		}
+		
+		//APP平台封装
+		List<Dictionary> PLATList = null;
+		Map plaMap = null;
+		if(session.getAttribute("plaMap") == null){
+			PLATList = dictionaryService.getAppFlatForm();
+			plaMap =new HashMap();
+				for(Dictionary d : PLATList) {
+				Object plaKey = (Object)d.getId();
+				plaMap.put(plaKey, d.getValuename());
+			}
+		}else{
+			plaMap= (HashMap)session.getAttribute("plaMap");
+		}
+		//发布状态
+		List<Dictionary> pubList = null;
+		Map pubMap = null;
+		if(session.getAttribute("pubMap") == null){
+			pubList = dictionaryService.getpublicStatus();
+			pubMap =new HashMap();
+			
+				for(Dictionary d : pubList) {
+				
+				Object plaKey = (Object)d.getId();
+				pubMap.put(plaKey, d.getValuename());
+			}
+		}else{
+			pubMap= (HashMap)session.getAttribute("pubMap");
+		}
+		
 		
 		int pageCount = 0;
 		int pageSize = 6;
@@ -100,6 +144,10 @@ public class BackController {
 			
 			session.setAttribute("categoryList", catList);
 			session.setAttribute("map", map);
+			session.setAttribute("dicMap", dicMap);
+			session.setAttribute("plaMap", plaMap);
+			session.setAttribute("pubMap", pubMap);
+			
 			session.setAttribute("pageCount", pageCount);
 			session.setAttribute("pageSize", pageSize);
 			session.setAttribute("TotalCount", TotalCount);

@@ -23,4 +23,13 @@ public interface InfoService {
 	 
 	 List<Information> queryInfo(String softName,int sort1,int sort2,int sort3);
 	 
+	 
+	 Information upOne(int id);
+	 
+	 int upload(int id);
+	 
+	 Information downOne(int id);
+	   //ÉÏ¼Ü²Ù×÷
+	  int download(int id);
+	 
 } 

@@ -40,5 +40,15 @@ public interface InformationMapper {
     		@Param("sort2")int sort2,
     		@Param("sort3")int sort3);
     
+    //上架操作：判断是否审核通过
+    Information upOne(int id);
+    //上架操作
+   int upload(int id);
+    
+   //上架操作：判断是否以上架
+   Information downOne(int id);
+   //上架操作
+  int download(int id);
+    
     
 }

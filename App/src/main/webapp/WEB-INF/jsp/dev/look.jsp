@@ -60,23 +60,6 @@ String basePath = request.getScheme() + "://"
 				
 			});
 			
-			$(".qqq").click(function(){
-
-				$(".ooo").click(function(){
-					$.ajax({
-						url:"${pageContext.request.contextPath}/verifyNo/"+p,
-						type:"GET",
-						success:function(result){
-							if(result==true){
-								alert("审核不通过");
-								//window.location.href="${pageContext.request.contextPath}/manager/validate";
-							}
-						}
-					})
-					
-				});
-				
-			});
 		});
 	</script>
 </head>
@@ -168,7 +151,7 @@ String basePath = request.getScheme() + "://"
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
                    
-                    <li><a href="${pageContext.request.contextPath }/login-back"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li><a href="${pageContext.request.contextPath }/login-developer"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
                 </li>
 
@@ -251,33 +234,42 @@ String basePath = request.getScheme() + "://"
                               <c:set var="so2" value="${info.categorylevel2 }" scope="session"></c:set>
                               <c:set var="so3" value="${info.categorylevel3 }" scope="session"></c:set>
                               
-                              <c:set var="so4" value="${info.flatformid }"  scope="session"></c:set>
+                              <c:set var="so4" value="${info.flatformid +10}"  scope="session"></c:set>
                       			
                             <c:set var="so5" value="${info.status }"  scope="session"></c:set>
-                             <c:set var="so6" value=" ${version.publishstatus }" scope="session"></c:set>
+                             <c:set var="so6" value="${version.publishstatus+ 13 }" scope="session"></c:set>
                            
                               <% 
+                              //APP分类索引
                               Map map = (HashMap)session.getAttribute("map");
+								 
+                              //APP平台
+							 Map plamap = (HashMap)session.getAttribute("plaMap");
                               
+							 //APP状态
                               Map dicMap = (HashMap)session.getAttribute("dicMap");
-                              
-                              
+                              //状态
+                              Map pubMap = (HashMap)session.getAttribute("pubMap");
                               
                               Object a = session.getAttribute("so1");
                                Object b = session.getAttribute("so2");
                                Object c = session.getAttribute("so3");
-                           	  Object d = (Object)session.getAttribute("so4");
-                           	 Object e = (Object)session.getAttribute("so5");
-                           	 Object f = (Object)session.getAttribute("so6");
+                           	  Object d = session.getAttribute("so4");
+                           	 Object e = session.getAttribute("so5");
+                           	 Object f = session.getAttribute("so6");
                            		
                                	Object s1 =  map.get(a);
                             	Object s2 =  map.get(b);
                             	Object s3 =  map.get(c);
-                            	Object s4 =  (Object)map.get(d);
-                            	Object s5 =  (Object)dicMap.get(e);
-                            	Object s6 =  (Object)dicMap.get(f);
+                            	//平台
+                            	Object s4 =  plamap.get(d);
+                            	//状态
+                            	Object s5 =  dicMap.get(e);
+                            	//发布
+                            	Object s6 =  pubMap.get(f);
+                           
                               %>
-                              
+                              <c:set var="pub" value="<%=s6 %>" scope="session"></c:set>
                       <div class="form-group">
                         <label for="platform" class="control-label col-md-3 col-sm-3 col-xs-12">所属平台<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -298,7 +290,7 @@ String basePath = request.getScheme() + "://"
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="desc" class="control-label col-md-3 col-sm-3 col-xs-12">应用简介<span class="required">*</span></label>
+                        <label for="desc" class="control-label col-md-3 col-sm-3 col-xs-12">${version.publishstatus }应用简介<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         	<textarea  class="form-control" rows="3" placeholder="简介" name="desc" id="desc">${info.appinfo }</textarea>
                         </div>
@@ -353,7 +345,14 @@ String basePath = request.getScheme() + "://"
                       <div class="form-group">
                         <label for="versionStatus" class="control-label col-md-3 col-sm-3 col-xs-12">发布状态<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="versionStatus" class="form-control col-md-7 col-xs-12" readonly value="${version.publishstatus }<%=dicMap %>"   type="text" name="versionStatus">
+                        <c:if test="${pub != null}">
+                        
+                          <input id="versionStatus" class="form-control col-md-7 col-xs-12" readonly value="<%=s6 %>"   type="text" name="versionStatus">
+                        </c:if>
+                        <c:if test="${pub == null}">
+                        
+                          <input id="versionStatus" class="form-control col-md-7 col-xs-12" readonly value=""   type="text" name="versionStatus">
+                        </c:if>
                         </div>
                       </div>
                       <div class="form-group">

@@ -2,7 +2,7 @@
     pageEncoding="utf-8"%>
      
     
-    
+ <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>  
 <%@ include file="../head_query.jsp" %>
 
 <link href="${pageContext.request.contextPath }/statics/css/bootstrap.min.css" rel="stylesheet">
@@ -13,6 +13,91 @@
 
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath }/statics/css/custom.min.css" rel="stylesheet">
+    	
+ 
+    <script type="text/javascript">
+$(function(){
+	/* $(".up").click(function(){
+		 var id = $(".main_id").val();
+		$.ajax({
+			url:"${pageContext.request.contextPath}/up?id="+id,
+			type:"GET",
+			success:function(data){
+				if(data == true){
+					alert("上架成功");
+					
+				}
+				if(data == false){
+					alert("该APP未审核或审核未通过，无法上架");
+				}
+			}
+		});
+		
+	}); */
+	
+	/* $(".down").click(function(){
+		 var id = $(".main_id").val();
+		 alert("down"+id);
+			$.ajax({
+				url:"${pageContext.request.contextPath}/down?id="+id,
+				type:"GET",
+				success:function(data){
+					if(data == true){
+						alert("下架成功");
+						
+					}
+					if(data == false){
+						alert("下架失败，该APP未上架");
+					}
+				}
+			});
+		
+		
+	}); */
+	
+});
+    
+    function m2(id){
+    	
+    	$.ajax({
+			url:"${pageContext.request.contextPath}/up?id="+id,
+			type:"GET",
+			success:function(data){
+				if(data == true){
+					alert("上架成功");
+					
+				}
+				if(data == false){
+					alert("该APP未审核或审核未通过，无法上架");
+				}
+			}
+		});
+    }
+    
+    
+		function m1(id){
+			
+			alert(id);
+			
+			$.ajax({
+				url:"${pageContext.request.contextPath}/down?id="+id,
+				type:"GET",
+				success:function(data){
+					if(data == true){
+						alert("下架成功");
+						
+					}
+					if(data == false){
+						alert("下架失败，该APP未上架");
+					}
+				}
+			});
+			
+			
+			
+			  }
+</script>
+    
 </head>
 
  <body class="nav-md">
@@ -227,23 +312,35 @@
 													</tr>
 												</thead>
 													
-                       		  <c:set var="so1" value="${info.categorylevel1 }" scope="session"></c:set>
+                       		 
+											<!--               ------ -->
+										
+											
+											<c:forEach items="${infoList }" var="info" varStatus="i">
+											
+											 <c:set var="so1" value="${info.categorylevel1 }" scope="session"></c:set>
                               <c:set var="so2" value="${info.categorylevel2 }" scope="session"></c:set>
                               <c:set var="so3" value="${info.categorylevel3 }" scope="session"></c:set>
-                              
-                              <c:set var="so4" value="${info.flatformid }"  scope="session"></c:set>
+                             
+                              <c:set var="so4" value="${info.flatformid +10 }"  scope="session"></c:set>
                       			
                             <c:set var="so5" value="${info.status }"  scope="session"></c:set>
-											
-											<!--               ------ -->
-								 <% 
+										
+										
+									 <% 
+								 //APP分类索引
                               Map map = (HashMap)session.getAttribute("map");
+								 
+                              //APP平台
+								 Map plamap = (HashMap)session.getAttribute("plaMap");
                               
+								 //APP状态
                               Map dicMap = (HashMap)session.getAttribute("dicMap");
                               
                               Object a = session.getAttribute("so1");
                                Object b = session.getAttribute("so2");
                                Object c = session.getAttribute("so3");
+                               
                            	  Object d = (Object)session.getAttribute("so4");
                            	 Object e = (Object)session.getAttribute("so5");
                            		
@@ -251,19 +348,20 @@
                             	Object s2 =  map.get(b);
                             	Object s3 =  map.get(c);
                             	
-                            	Object s4 =  (Object)dicMap.get(d);
-                            	Object s5 =  (Object)map.get(e);
-                              %>			
-											
-											<c:forEach items="${infoList }" var="info" varStatus="i">
+                            	Object s4 =  (Object)plamap.get(d);
+                            	Object s5 =  (Object)dicMap.get(e);
+                              %>		
+										
+										
+										
 											
 													<tr>
 														<td>${info.softwarename }</td>
 														<td>${info.apkname }</td>
-														<td>$   {info.softwaresize }</td>
-														<td>手机</td>
-														<td><%=s1 %>--><%=s2 %>--><%=s3 %></td>
+														<td>${info.softwaresize }</td>
 														<td><%=s4 %></td>
+														<td><%=s1 %>--><%=s2 %>--><%=s3 %></td>
+														<td><%=s5 %></td>
 														<td>${info.downloads }</td>
 														<td>
 															<!-- Split button -->
@@ -273,12 +371,13 @@
                         										<span class="caret"></span>
                         							<span class="sr-only">Toggle Dropdown</span>
                       									</button>
+                      									
 																<ul class="dropdown-menu" role="menu">
 																	<li>
-																		<a href="#">上架</a>
+																		<a class="up" onclick="m2(${info.id })">上架</a>
 																	</li>
 																	<li>
-																		<a href="#">下架</a>
+																		<a class="down" onclick="m1(${info.id })">下架</a>
 																	</li>
 																	<li>
 																		<a href="#">新增版本</a>
@@ -292,18 +391,23 @@
 																	<li>
 																		<a href="${pageContext.request.contextPath }/dev/look?id=${info.id}">查看</a>
 																	</li>
-																	</li>
+																	
 																	<li>
 																		<a href="#">删除</a>
 																	</li>
 																</ul>
+																
+																 <!-- Split button -->
+                    
+
+                    <!-- Split button -->
 															</div>
 														</td>
 													</tr>
 													
 													</c:forEach>
 													
-												</tbody>
+												
 											</table>
                       <!-- content_table end -->
                     </div>
@@ -313,6 +417,22 @@
               </div>
             </div>
           </div>
+          
+            <p align="right"> 当前页数:[${now_page }/${ totalPages}]&nbsp; 
+       
+       <c:if test="${now_page < totalPages}">
+       
+       <a href="${pageContext.request.contextPath }/dev/page?p=${now_page+1}">下一页</a>
+       
+       </c:if>
+       
+        <c:if test="${now_page >1}">
+       
+       <a href="${pageContext.request.contextPath }/dev/page?p=${now_page-1}">上一页</a>
+       
+       </c:if>
+        <a href="${pageContext.request.contextPath }/dev/page?p=${totalPages}">末页</a> </p>
+        
         </div>
         <!-- /page content -->
 

@@ -86,4 +86,28 @@ public class InfoServiceImpl implements InfoService {
 		return informationMapper.queryInfo(softName,sort1,sort2,sort3);
 	}
 
+
+	@Override
+	public Information upOne(int id) {
+		return informationMapper.upOne(id);
+	}
+
+
+	@Override
+	public int upload(int id) {
+		return informationMapper.upload(id);
+	}
+
+
+	@Override
+	public Information downOne(int id) {
+		return informationMapper.downOne(id);
+	}
+
+
+	@Override
+	public int download(int id) {
+		return informationMapper.download(id);
+	}
+
 }
