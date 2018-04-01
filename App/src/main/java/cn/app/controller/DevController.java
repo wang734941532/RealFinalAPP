@@ -327,6 +327,54 @@ public class DevController {
 	}
 	
 	
+	@RequestMapping("/modifyVersion")
+	public String addVersion(int id,HttpSession session) {
+	
+	Information information = 	infoService.getInfoById(id);
+	List<Version> versionList = versionService.getVersionByAppId(id);
+		
+	session.setAttribute("info", information);
+	session.setAttribute("versionList", versionList);
+	
+		return "dev/modify_version";
+	}
+	
+	@RequestMapping("/realmodifyVersion")
+	public String addVersion(int id,int appid,HttpSession session) {
+	
+	Information information = 	infoService.getInfoById(id);
+	Version version = versionService.getVersionById(id);
+	List<Version> versionList = versionService.getVersionByAppId(appid);
+	
+	
+	//APP发布封装
+	//发布状态
+	List<Dictionary> pubList = null;
+	Map pubMap = null;
+	if(session.getAttribute("pubMap") == null){
+		pubList = dictionaryService.getpublicStatus();
+		pubMap =new HashMap();
+		
+			for(Dictionary d : pubList) {
+			
+			Object plaKey = (Object)d.getId();
+			pubMap.put(plaKey, d.getValuename());
+		}
+	}else{
+		pubMap= (HashMap)session.getAttribute("pubMap");
+	}
+	
+	
+	
+	
+	session.setAttribute("info", information);
+	session.setAttribute("versionList", versionList);
+	session.setAttribute("version", version);
+	session.setAttribute("pubMap", pubMap);
+		return "dev/realVersionModify";
+	}
+	
+	
 	
 	
 	
