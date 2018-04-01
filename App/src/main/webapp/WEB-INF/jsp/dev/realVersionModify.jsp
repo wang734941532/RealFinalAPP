@@ -39,26 +39,58 @@
    <script type="text/javascript">
    $(function(){
 	  
-	   $.ajax({
-		  
-			url:"${pageContext.request.contextPath}/pub",
-			type:"GET",
-			success:function(data){
-				if(data!=null){
-					
-					$("#pubStatus").find("option").remove();
-					console.log(data[1]);
-					 for(var i = 0; i<data.length; i++){
-						var $opt = $("<option></option>").html(data[i].valuename)
-														 .attr("value",data[i].valueid);
-						
-						$("#pubStatus").append($opt);
-					} 
-				}
-			}
-			});
-	  
 	   
+	   
+	   $("#versionNo").click(function(){
+		   
+		   $.ajax({
+				  
+				url:"${pageContext.request.contextPath}/pub",
+				type:"GET",
+				success:function(data){
+					if(data!=null){
+						
+						$("#pubStatus").find("option").remove();
+						console.log(data[1]);
+						 for(var i = 0; i<data.length; i++){
+							var $opt = $("<option></option>").html(data[i].valuename)
+															 .attr("value",data[i].valueid);
+							
+							$("#pubStatus").append($opt);
+						} 
+					}
+				}
+				}); 
+		   
+		   
+		   
+	   });
+	   
+	   
+	   
+	   
+	   $("#versionSize").blur(function(){
+		   
+		   $.ajax({
+				  
+				url:"${pageContext.request.contextPath}/pub",
+				type:"GET",
+				success:function(data){
+					if(data!=null){
+						
+						$("#pubStatus").find("option").remove();
+						console.log(data[1]);
+						 for(var i = 0; i<data.length; i++){
+							var $opt = $("<option></option>").html(data[i].valuename)
+															 .attr("value",data[i].valueid);
+							
+							$("#pubStatus").append($opt);
+						} 
+					}
+				}
+				}); 
+		   
+	   });
 	 
    });
    function back(){
@@ -67,7 +99,6 @@
    }
 	 
    
-  
    
    
    </script>
@@ -187,7 +218,7 @@
                 <div class="x_panel"><!--??面板-->
                 	
                 	<div class="x_title"><!--题目1title-->
-              			<h2> 新增最新版本信息  <i class="fa fa-user"></i> <span>${userName }</span></h2>
+              			<h2> 待修改版本信息  <i class="fa fa-user"></i> <span>${userName }</span></h2>
               			<div class="clearfix"></div>
               		</div><!--题目1title end-->
               		<div class="x_title"><!--题目2title-->
@@ -236,7 +267,7 @@
                     </table>
               		</div><!--历史版本列表 end-->
                   <div class="x_title"><!--题目3title-->
-                    <h2> 新增最新版本信息 </h2>
+                    <h2> 修改版本信息 </h2>
                     <!--右边三个图标的HTML-->
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -249,7 +280,7 @@
                   
                   <div class="x_content"><!--内容content-->
                     <br />
-                    <form id="demo-form2"  method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath }/dev/upload"  data-parsley-validate class="form-horizontal form-label-left">
+                    <form id="demo-form2"  method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath }/dev/nowModifyVersion"  data-parsley-validate class="form-horizontal form-label-left">
  <input type="hidden" name="id" value="${info.id}" />
   <input type="hidden" name="engname" value="${info.apkname}" />
                       <div class="form-group">
@@ -270,14 +301,12 @@
                         <label for="pubStatus" class="control-label col-md-3 col-sm-3 col-xs-12">发布状态<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         
-                        <select name="pubStatus" id="pubStatus" style="border: 2px solid black;  border-radius: 5px;width: 180px;height: 26px;">
+                        <select name="pubStatus"   id="pubStatus" style="border: 2px solid black;  border-radius: 5px;width: 280px;height: 26px;">
      						<c:set var="rePub" value="${version.publishstatus }" scope="session"></c:set>
      						<% 
 						Map pubmap = (HashMap)session.getAttribute("pubMap");
-     						Object a = session.getAttribute("rePub");
-     						Object soo = pubmap.get(a);
 								%>
-     					 <option value="${version.publishstatus }"><%=soo %></option>
+     					 <option value="${version.publishstatus }">${version.publishstatus+13 }----<%=pubmap %></option>
      				</select>&nbsp; &nbsp; 
                         
                         </div>

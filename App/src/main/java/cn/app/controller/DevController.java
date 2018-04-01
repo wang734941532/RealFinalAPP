@@ -328,7 +328,7 @@ public class DevController {
 	
 	
 	@RequestMapping("/modifyVersion")
-	public String addVersion(int id,HttpSession session) {
+	public String modifyVersion(int id,HttpSession session) {
 	
 	Information information = 	infoService.getInfoById(id);
 	List<Version> versionList = versionService.getVersionByAppId(id);
@@ -340,12 +340,11 @@ public class DevController {
 	}
 	
 	@RequestMapping("/realmodifyVersion")
-	public String addVersion(int id,int appid,HttpSession session) {
+	public String addVersion(int id,int appId,HttpSession session) {
 	
-	Information information = 	infoService.getInfoById(id);
+	Information information = 	infoService.getInfoById(appId);
 	Version version = versionService.getVersionById(id);
-	List<Version> versionList = versionService.getVersionByAppId(appid);
-	
+	List<Version> versionList = versionService.getVersionByAppId(appId);
 	
 	//APP发布封装
 	//发布状态
@@ -446,6 +445,182 @@ public class DevController {
         }
 		
 	}
+	
+	
+	@RequestMapping(value="/nowModifyVersion",method=RequestMethod.POST)
+	public String nowModifyVersion(HttpServletRequest request,
+			Long id,String versionNo,String versionSize,String pubStatus,String versionInfo,String engname,
+            @RequestParam(value="apkName",required=false) MultipartFile file) {
+		
+		Version v = null;
+		
+		String myPath = null;
+		  //如果文件不为空，写入上传路径
+      if(!file.isEmpty()) {
+            //上传文件路径
+            String path = request.getServletContext().getRealPath("/statics/img");
+            
+            String lowpath = null;
+            String realpath = request.getContextPath() + "/statics/img";
+            //上传文件名
+            String filename = file.getOriginalFilename();
+            File filepath = new File(path,filename);
+            //判断路径是否存在，如果不存在就创建一个
+            if (!filepath.getParentFile().exists()) { 
+                filepath.getParentFile().mkdirs();
+            }
+            //将上传文件保存到一个目标文件当中
+            try {
+            	myPath = path + File.separator + filename;
+            	lowpath = realpath + File.separator + filename;
+				file.transferTo(new File(path + File.separator + filename));
+				System.out.println(myPath+"======*****");
+				System.out.println(lowpath+"======*****");
+				
+				v = new Version();
+				v.setId(id);
+				v.setVersionno(versionNo);
+				int versionsize = Integer.parseInt(versionSize);
+				v.setVersionsize(versionsize);
+				Long pubStatu = Long.parseLong(pubStatus);
+				v.setPublishstatus(pubStatu);
+				v.setVersioninfo(versionInfo);
+				v.setDownloadlink(lowpath);
+				v.setApklocpath(myPath);
+				v.setApkfilename(engname);
+				v.setModifydate(new Date());
+				Long  p = 1L; 
+				v.setModifyby(p);
+			 int count = versionService.updateByPrimaryKeySelective(v);
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+            
+            return "redirect:maintenance";
+        } else {
+        	
+        	return "redirect:maintenance";
+        }
+		
+	}
+	
+	
+	@RequestMapping("/addApp")
+	public String addApp() {
+		
+		
+		return "dev/app_add";
+	}
+	
+	@RequestMapping(value="/writeApp",method=RequestMethod.POST)
+	public String writeApp(HttpServletRequest request,
+			String Sname,String Aname,String rom,String gui, Long size,Long count,Long platform,
+			Long sort1,Long sort2,Long sort3,Long state,String desc,
+            @RequestParam(value="logo",required=false) MultipartFile file) {
+		
+	Information information = new Information();
+	information.setSoftwarename(Sname);
+	information.setApkname(Aname);
+	information.setSupportrom(rom);
+	information.setInterfacelanguage(gui);
+	information.setSoftwaresize(size);
+	information.setDownloads(count);
+	information.setFlatformid(platform);
+	information.setCategorylevel1(sort1);
+	information.setCategorylevel2(sort2);
+	information.setCategorylevel3(sort3);
+	information.setStatus(state);
+	information.setAppinfo(desc);
+	
+	
+		String myPath = null;
+		  //如果文件不为空，写入上传路径
+      if(!file.isEmpty()) {
+            //上传文件路径
+            String path = request.getServletContext().getRealPath("/statics/img");
+            
+            String lowpath = null;
+            String realpath = request.getContextPath() + "/statics/img";
+            //上传文件名
+            String filename = file.getOriginalFilename();
+            File filepath = new File(path,filename);
+            //判断路径是否存在，如果不存在就创建一个
+            if (!filepath.getParentFile().exists()) { 
+                filepath.getParentFile().mkdirs();
+            }
+            //将上传文件保存到一个目标文件当中
+            try {
+            	myPath = path + File.separator + filename;
+            	lowpath = realpath + File.separator + filename;
+				file.transferTo(new File(path + File.separator + filename));
+				System.out.println(lowpath+"======*****");
+				information.setLogolocpath(myPath);
+				information.setLogopicpath(lowpath);
+				
+			 int c = infoService.insertSelective(information);
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+            
+            return "redirect:maintenance";
+        } else {
+        	
+        	return "redirect:maintenance";
+        }
+	}
+	
+	
+	
+	@RequestMapping("/modifyApp")
+	public String v_display(String id,Model model,HttpSession session) {
+		int info_Id =Integer.parseInt(id);
+		Information info = null;
+		Version v = null;
+		List<Dictionary> dicList = null;
+		Map dicMap = null;
+		if(session.getAttribute("dicMap") == null){
+			dicList = dictionaryService.getDictionaryListByStatus();
+			dicMap =new HashMap();
+			
+				for(Dictionary d : dicList) {
+				
+				Object dicKey = (Object)d.getValueid();
+				dicMap.put(dicKey, d.getValuename());
+			}
+		}else{
+			dicMap= (HashMap)session.getAttribute("dicMap");
+		}
+	
+		try {
+			
+			info = infoService.getInfoById(info_Id );
+			
+			if(info.getVersionid()==null){
+				System.out.println("null!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			}else{
+				long p = info.getVersionid();
+				int a = (int)p;
+				v = versionService.getVersionById(a);
+			}
+			
+			//model.addAttribute("version",v);
+			//model.addAttribute("info", info);
+			session.setAttribute("version",v);
+			session.setAttribute("info", info);
+			session.setAttribute("dicMap", dicMap);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("DevController_error--------------");
+		}
+		
+		return "dev/modify_app";
+	}
+	
 	
 	
 }

@@ -52,6 +52,8 @@ public interface InformationMapper {
   
   //É¾³ý
   int delete(int id);
+  
+  
     
     
 }

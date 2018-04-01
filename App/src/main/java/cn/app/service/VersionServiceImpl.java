@@ -54,4 +54,11 @@ public class VersionServiceImpl implements VersionService {
 		return versionMapper.insertSelective(record);
 	}
 
+
+
+	@Override
+	public int updateByPrimaryKeySelective(Version record) {
+		return versionMapper.updateByPrimaryKeySelective(record);
+	}
+
 }

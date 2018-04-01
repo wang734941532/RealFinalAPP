@@ -33,5 +33,7 @@ public interface InfoService {
 	  int download(int id);
 	  
 	  int delete(int id);
+	  
+	  int insertSelective(Information record);
 	 
 } 

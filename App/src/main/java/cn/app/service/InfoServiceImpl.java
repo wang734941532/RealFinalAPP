@@ -116,4 +116,10 @@ public class InfoServiceImpl implements InfoService {
 		return informationMapper.delete(id);
 	}
 
+
+	@Override
+	public int insertSelective(Information record) {
+		return informationMapper.insertSelective(record);
+	}
+
 }

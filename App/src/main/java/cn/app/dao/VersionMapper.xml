@@ -24,4 +24,13 @@
  
  </insert>
  
+ <update id="updateByPrimaryKeySelective" parameterType="Version">
+ 
+  UPDATE app_version SET versionNo = #{versionsize},versionSize =#{versionsize}, publishStatus =#{publishstatus},
+  versionInfo = #{versioninfo},downloadLink = #{downloadlink},apkLocPath=#{apklocpath},modifyBy =#{modifyby},
+  modifyDate = #{modifydate},apkFileName =#{apkfilename}  WHERE  id= #{id}
+  
+ 
+ </update>
+ 
 </mapper>

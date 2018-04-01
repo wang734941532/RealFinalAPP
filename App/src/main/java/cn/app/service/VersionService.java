@@ -14,4 +14,6 @@ public interface VersionService {
 	  public List<Version> getVersionByAppId(int appId);
 	  
 	  int insertSelective(Version record);
+	  
+	  int updateByPrimaryKeySelective(Version record);
 }

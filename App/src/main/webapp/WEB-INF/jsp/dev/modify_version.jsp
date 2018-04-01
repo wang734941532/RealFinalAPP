@@ -187,7 +187,7 @@
                 <div class="x_panel"><!--??面板-->
                 	
                 	<div class="x_title"><!--题目1title-->
-              			<h2> 新增最新版本信息  <i class="fa fa-user"></i> <span>${userName }</span></h2>
+              			<h2> 待修改版本信息  <i class="fa fa-user"></i> <span>${userName }</span></h2>
               			<div class="clearfix"></div>
               		</div><!--题目1title end-->
               		<div class="x_title"><!--题目2title-->

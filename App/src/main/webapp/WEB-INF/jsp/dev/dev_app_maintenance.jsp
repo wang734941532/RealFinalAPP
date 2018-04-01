@@ -200,7 +200,7 @@
               <div class="col-md-12">
                 <div class="x_panel">
 	          	<div class="x_title">
-					<a class="btn btn-success " href="">新增APP基础信息</a>
+					<a class="btn btn-success " href="${pageContext.request.contextPath }/dev/addApp">新增APP基础信息</a>
 					<ul class="nav navbar-right panel_toolbox">
 						<li>
 							<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>

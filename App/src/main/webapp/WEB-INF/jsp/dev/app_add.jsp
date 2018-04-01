@@ -21,6 +21,158 @@
     <link href="${pageContext.request.contextPath }/statics/css/custom.min.css" rel="stylesheet">
     
     
+   <!-- jQuery -->
+    <script src="${pageContext.request.contextPath }/statics/js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="${pageContext.request.contextPath }/statics/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="${pageContext.request.contextPath }/statics/js/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="${pageContext.request.contextPath }/statics/js/nprogress.js"></script>
+    <!-- validator -->
+    <script src="${pageContext.request.contextPath }/statics/js/validator.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="${pageContext.request.contextPath }/statics/js/custom.min.js"></script>
+    
+    
+    
+    <script type="text/javascript">
+
+    $(function(){
+    	
+    	
+    	
+    	   $.ajax({
+				url:"${pageContext.request.contextPath}/status",
+				type:"GET",
+				success:function(data){
+					if(data!=null){
+						
+						//alert("result");
+						//$("#app_state").removeChild();
+						$("#app_state").find("option").remove();
+						console.log(data[1]);
+						 for(var i = 0; i<data.length; i++){
+							var $opt = $("<option></option>").html(data[i].valuename)
+															 .attr("value",data[i].id);
+							
+							$("#app_state").append($opt);
+						} 
+					}
+				}
+			
+		   
+	   });
+    	
+    	
+    	
+    	
+    	 $.ajax({
+				url:"${pageContext.request.contextPath}/flatform",
+				type:"GET",
+				success:function(data){
+					if(data!=null){
+						
+						//alert("result");
+						//$("#app_state").removeChild();
+						$("#platform").find("option").remove();
+						console.log(data[1]);
+						 for(var i = 0; i<data.length; i++){
+							var $opt = $("<option></option>").html(data[i].valuename)
+															 .attr("value",data[i].id);
+							
+							$("#platform").append($opt);
+						} 
+					}
+				}
+			}) 
+    	
+    	
+			   $.ajax({
+					url:"${pageContext.request.contextPath}/levelOne",
+					type:"GET",
+					success:function(data){
+						if(data!=null){
+							$("#sort1").find("option").remove();
+							console.log(data[1]);
+							 for(var i = 0; i<data.length; i++){
+								var $opt = $("<option></option>").html(data[i].categoryname)
+																 .attr("value",data[i].id);
+								/*  if(i == 0){
+									$opt.attr("selected",true);
+								}  */
+								$("#sort1").append($opt);
+							} 
+						}
+					}
+				}) 
+			
+    	
+				   //二级分类
+			    $("#sort1").change(function(){ 
+				   var options=$("#sort1 option:selected").val(); 
+				   console.log(options);
+					 //  alert("come into");
+					    $.ajax({
+							url:"${pageContext.request.contextPath}/sort2?sort1option="+options,
+							type:"GET",
+							success:function(data){
+								if(data!=null){
+									
+									//alert("result");
+									//$("#app_state").removeChild();
+									$("#sort2").find("option").remove();
+									console.log(data[1]);
+									 for(var i = 0; i<data.length; i++){
+										var $opt = $("<option></option>").html(data[i].categoryname)
+																		 .attr("value",data[i].id);
+										
+										$("#sort2").append($opt);
+									} 
+								}
+							}
+						}) 
+					   
+				    }); 
+    	 
+			//三级分类
+			
+  	   $("#sort2").change(function(){
+  		   var options=$("#sort2 option:selected").val(); 
+  		   console.log(options);
+  			 //  alert("come into");
+  			    $.ajax({
+  					url:"${pageContext.request.contextPath}/sort3?sort2option="+options,
+  					type:"GET",
+  					success:function(data){
+  						if(data!=null){
+  							
+  							//alert("result");
+  							//$("#app_state").removeChild();
+  							$("#sort3").find("option").remove();
+  							console.log(data[1]);
+  							 for(var i = 0; i<data.length; i++){
+  								var $opt = $("<option></option>").html(data[i].categoryname)
+  																 .attr("value",data[i].id);
+  								 
+  								$("#sort3").append($opt);
+  							} 
+  						}
+  					}
+  				}) 
+  			   
+  		   });
+    	
+    });
+    
+    function back(){
+ 	   
+		   window.location.href="${pageContext.request.contextPath }/dev/maintenance";
+}
+    
+    
+	</script>
 
 </head>
 <body class="nav-md">
@@ -163,7 +315,7 @@
                   </div>
                   <div class="x_content">
 
-                    <form class="form-horizontal form-label-left" novalidate enctype="multipart/form-data">
+                    <form class="form-horizontal form-label-left" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath }/dev/writeApp" >
 
                       </p>
                       <span class="section">新增APP基础信息</span>
@@ -272,7 +424,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="state">APP状态 <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="state" name="state" placeholder="待审核" readonly data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="state" name="state" placeholder="待审核" value="1" readonly data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       
@@ -294,8 +446,8 @@
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                          <button type="submit" class="btn btn-primary">Cancel</button>
-                          <button id="send" type="submit" class="btn btn-success">Submit</button>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                          <button id="send" type="submit" class="btn btn-success" onclick="back()">back</button>
                         </div>
                       </div>
                     </form>
@@ -318,22 +470,8 @@
       </div>
     </div>
 
-   <!-- jQuery -->
-    <script src="${pageContext.request.contextPath }/statics/js/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="${pageContext.request.contextPath }/statics/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="${pageContext.request.contextPath }/statics/js/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="${pageContext.request.contextPath }/statics/js/nprogress.js"></script>
     <!-- validator -->
-    <script src="${pageContext.request.contextPath }/statics/js/validator.js"></script>
-
-    <!-- Custom Theme Scripts -->
-    <script src="${pageContext.request.contextPath }/statics/js/custom.min.js"></script>
-
-    <!-- validator -->
-    <script>
+    <!-- <script>
       // initialize the validator function
       validator.message.date = 'not a real date';
 
@@ -361,7 +499,7 @@
 
         return false;
       });
-    </script>
+    </script> -->
     <!-- /validator -->
   </body>
 </html>

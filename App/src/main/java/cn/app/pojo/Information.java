@@ -22,7 +22,7 @@ public class Information {
 
     private String interfacelanguage;
 
-    private BigDecimal softwaresize;
+    private Long softwaresize;
 
     private Date updatedate;
 
@@ -112,11 +112,11 @@ public class Information {
         this.interfacelanguage = interfacelanguage == null ? null : interfacelanguage.trim();
     }
 
-    public BigDecimal getSoftwaresize() {
+    public Long getSoftwaresize() {
         return softwaresize;
     }
 
-    public void setSoftwaresize(BigDecimal softwaresize) {
+    public void setSoftwaresize(Long softwaresize) {
         this.softwaresize = softwaresize;
     }
 
