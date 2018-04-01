@@ -1,5 +1,7 @@
 package cn.app.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,27 @@ public class VersionServiceImpl implements VersionService {
 			e.printStackTrace();
 		}
 		return v;
+	}
+
+
+
+	@Override
+	public int deleteVersionByAppId(int appId) {
+		return versionMapper.deleteVersionByAppId(appId);
+	}
+
+
+
+	@Override
+	public List<Version> getVersionByAppId(int appId) {
+		return versionMapper.getVersionByAppId(appId);
+	}
+
+
+
+	@Override
+	public int insertSelective(Version record) {
+		return versionMapper.insertSelective(record);
 	}
 
 }

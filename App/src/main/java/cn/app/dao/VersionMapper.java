@@ -1,5 +1,7 @@
 package cn.app.dao;
 
+import java.util.List;
+
 import cn.app.pojo.Version;
 
 public interface VersionMapper {
@@ -17,4 +19,11 @@ public interface VersionMapper {
     
     //用于管理员界面审核展示版本号
     public Version getVersionById(int id);
+    
+    //关联删除appid
+    public int deleteVersionByAppId(int appId);
+    
+    public List<Version> getVersionByAppId(int appId);
+    
+  
 }

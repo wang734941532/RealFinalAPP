@@ -190,4 +190,36 @@ public class AjaxController {
 		return flag;
 	}
 	
+	@RequestMapping(value="/delete",method=RequestMethod.GET)
+	@ResponseBody
+	public boolean verify11(int id){
+		
+		boolean flag = false;
+		try {
+			int deleteId = versionService.deleteVersionByAppId(id);
+			System.out.println(deleteId);
+			int count =infoService.delete(id);
+			if(count > 0) {
+				flag = true;
+			}else {
+				flag = false;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return flag;
+	}
+	
+	
+	@RequestMapping("/pub")
+	@ResponseBody
+	public List<Dictionary> pub() {
+		
+		List<Dictionary> pubList = dictionaryService.getpublicStatus();
+		System.out.println(pubList+"===========");
+		return pubList;
+	}
+	
+	
 }

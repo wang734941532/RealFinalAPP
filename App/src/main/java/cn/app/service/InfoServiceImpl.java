@@ -110,4 +110,10 @@ public class InfoServiceImpl implements InfoService {
 		return informationMapper.download(id);
 	}
 
+
+	@Override
+	public int delete(int id) {
+		return informationMapper.delete(id);
+	}
+
 }

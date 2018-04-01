@@ -16,68 +16,29 @@
     	
  
     <script type="text/javascript">
-$(function(){
-	/* $(".up").click(function(){
-		 var id = $(".main_id").val();
-		$.ajax({
-			url:"${pageContext.request.contextPath}/up?id="+id,
-			type:"GET",
-			success:function(data){
-				if(data == true){
-					alert("上架成功");
-					
-				}
-				if(data == false){
-					alert("该APP未审核或审核未通过，无法上架");
-				}
-			}
+		$(function(){
+	
+	
 		});
-		
-	}); */
-	
-	/* $(".down").click(function(){
-		 var id = $(".main_id").val();
-		 alert("down"+id);
-			$.ajax({
-				url:"${pageContext.request.contextPath}/down?id="+id,
-				type:"GET",
-				success:function(data){
-					if(data == true){
-						alert("下架成功");
-						
-					}
-					if(data == false){
-						alert("下架失败，该APP未上架");
-					}
-				}
-			});
-		
-		
-	}); */
-	
-});
-    
+    //上架
     function m2(id){
-    	
     	$.ajax({
 			url:"${pageContext.request.contextPath}/up?id="+id,
 			type:"GET",
 			success:function(data){
 				if(data == true){
 					alert("上架成功");
-					
+				window.location.href="${pageContext.request.contextPath}/dev/maintenance";
 				}
 				if(data == false){
 					alert("该APP未审核或审核未通过，无法上架");
+					window.location.href="${pageContext.request.contextPath}/dev/maintenance";
 				}
 			}
 		});
     }
-    
-    
+    //下架
 		function m1(id){
-			
-			alert(id);
 			
 			$.ajax({
 				url:"${pageContext.request.contextPath}/down?id="+id,
@@ -85,17 +46,36 @@ $(function(){
 				success:function(data){
 					if(data == true){
 						alert("下架成功");
-						
+						window.location.href="${pageContext.request.contextPath}/dev/maintenance";
 					}
 					if(data == false){
 						alert("下架失败，该APP未上架");
+						window.location.href="${pageContext.request.contextPath}/dev/maintenance";
 					}
 				}
 			});
 			
+			  }
+    	//删除
+		function m3(id){
 			
+			$.ajax({
+				url:"${pageContext.request.contextPath}/delete?id="+id,
+				type:"GET",
+				success:function(data){
+					if(data == true){
+						alert("删除成功");
+						window.location.href="${pageContext.request.contextPath}/dev/maintenance";
+					}
+					if(data == false){
+						alert("删除失败");
+						window.location.href="${pageContext.request.contextPath}/dev/maintenance";
+					}
+				}
+			});
 			
 			  }
+    
 </script>
     
 </head>
@@ -301,7 +281,7 @@ $(function(){
                       <table class="table table-striped">
 												<thead>
 													<tr>
-														<th>软件名称/th>
+														<th>软件名称</th>
 															<th>APK名称</th>
 															<th>软件大小(单位:M)</th>
 															<th>所属平台</th>
@@ -380,20 +360,19 @@ $(function(){
 																		<a class="down" onclick="m1(${info.id })">下架</a>
 																	</li>
 																	<li>
-																		<a href="#">新增版本</a>
+																		<a href="${pageContext.request.contextPath }/dev/addVersion?id=${info.id}">新增版本</a>
 																	</li>
 																	<li>
-																		<a href="#">修改版本</a>
+																		<a href="${pageContext.request.contextPath }/dev/modifyVersion?id=${info.id}">修改版本</a>
 																	</li>
 																	<li>
-																		<a href="#">修改</a>
+																		<a href="${pageContext.request.contextPath }/dev/modifyApp?id=${info.id}">修改</a>
 																	</li>
 																	<li>
 																		<a href="${pageContext.request.contextPath }/dev/look?id=${info.id}">查看</a>
 																	</li>
-																	
 																	<li>
-																		<a href="#">删除</a>
+																		<a onclick="m3(${info.id })">删除</a>
 																	</li>
 																</ul>
 																

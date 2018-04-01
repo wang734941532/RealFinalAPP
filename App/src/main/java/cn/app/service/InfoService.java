@@ -31,5 +31,7 @@ public interface InfoService {
 	 Information downOne(int id);
 	   //ÉÏ¼Ü²Ù×÷
 	  int download(int id);
+	  
+	  int delete(int id);
 	 
 } 

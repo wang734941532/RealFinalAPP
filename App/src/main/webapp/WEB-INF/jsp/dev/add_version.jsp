@@ -1,5 +1,8 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,10 +20,57 @@
 
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath }/statics/css/custom.min.css" rel="stylesheet">
-    <style type="text/css">
     
-    </style>
     
+    
+    <!-- jQuery -->
+    <script src="${pageContext.request.contextPath }/statics/js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="${pageContext.request.contextPath }/statics/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="${pageContext.request.contextPath }/statics/js/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="${pageContext.request.contextPath }/statics/js/nprogress.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="${pageContext.request.contextPath }/statics/js/custom.min.js"></script>
+    
+    
+   <script type="text/javascript">
+   $(function(){
+	  
+	   $.ajax({
+		  
+			url:"${pageContext.request.contextPath}/pub",
+			type:"GET",
+			success:function(data){
+				if(data!=null){
+					
+					$("#pubStatus").find("option").remove();
+					console.log(data[1]);
+					 for(var i = 0; i<data.length; i++){
+						var $opt = $("<option></option>").html(data[i].valuename)
+														 .attr("value",data[i].valueid);
+						
+						$("#pubStatus").append($opt);
+					} 
+				}
+			}
+			});
+	  
+	   
+	 
+   });
+   function back(){
+	   
+		   window.location.href="${pageContext.request.contextPath }/dev/maintenance";
+   }
+	 
+   
+  
+   
+   
+   </script>
 </head>
  <body class="nav-md">
     <div class="container body">
@@ -28,7 +78,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentellela Alela!</span></a>
+              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>APP BMS</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -36,11 +86,11 @@
             <!-- menu profile quick info -->
             <div class="profile">
               <div class="profile_pic">
-                <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="${pageContext.request.contextPath }/statics/images/img.jpg" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>${userName }</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -48,9 +98,9 @@
             <br />
 
             <!-- sidebar menu -->
-          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-                <h3>  测试账户001 </h3>
+                <h3>  ${userCode } </h3>
                 <ul class="nav side-menu">
                 	
                   <li><a><i class="fa fa-home"></i> APP帐户管理 <span class="fa fa-chevron-down"></span></a>
@@ -64,23 +114,13 @@
                   
                   <li><a><i class="fa fa-edit"></i>APP应用管理<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="${pageContext.request.contextPath }/manager/validate">APP审核</a></li>
-                      <li><a href="${pageContext.request.contextPath }/error">广告推广 </a></li>
+                      <li><a href="${pageContext.request.contextPath }/dev/maintenance">APP维护</a></li>
                      
-                    </ul>
-                  </li>
-                  
-                  <li><a><i class="fa fa-desktop"></i>基础数据维护 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="${pageContext.request.contextPath }/error">暂无功能</a></li>
-                      <li><a href="${pageContext.request.contextPath }/error">暂无功能</a></li>
-                      
                     </ul>
                   </li>
                   
                 </ul>
               </div>
-           
 
             </div>
             <!-- /sidebar menu -->
@@ -105,7 +145,7 @@
         </div>
 
         <!-- top navigation -->
-       <div class="top_nav">
+         <div class="top_nav">
           <div class="nav_menu">
             <nav>
               <div class="nav toggle">
@@ -115,12 +155,12 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">John Doe
+                    <img src="images/img.jpg" alt="">${userName }
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
                    
-                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li><a href="${pageContext.request.contextPath }/login-developer "><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
                 </li>
 
@@ -131,7 +171,9 @@
             </nav>
           </div>
         </div>
+       
         <!-- /top navigation -->
+
 
 
        <!-- page content -->
@@ -145,7 +187,7 @@
                 <div class="x_panel"><!--??面板-->
                 	
                 	<div class="x_title"><!--题目1title-->
-              			<h2> 新增最新版本信息  <i class="fa fa-user"></i> <span>测试账号001</span></h2>
+              			<h2> 新增最新版本信息  <i class="fa fa-user"></i> <span>${userName }</span></h2>
               			<div class="clearfix"></div>
               		</div><!--题目1title end-->
               		<div class="x_title"><!--题目2title-->
@@ -167,32 +209,27 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Mark</td>
-                          <td>Mark</td>
-                          <td>Mark</td>
-                          <td>Mark</td>
-                          <td>Mark</td>
-                          <td>
-                          </td>
+                     
+                      <c:forEach items="${versionList }" var="version"  varStatus="i">
+                       <c:set var="so1" value="${version.publishstatus +13}" scope="session"></c:set>
+                      <%
+                      
+                     	 Map pubmap = (HashMap)session.getAttribute("pubMap");
+                      	Object a = session.getAttribute("so1");
+                     	Object s1 =  pubmap.get(a);
+                      %>
+                      
+                       <tr>
+                          <td>${info.softwarename }</td>
+                          <td>${version.versionno }</td>
+                          <td>${version.versionsize }</td>
+                          <td><%=s1 %></td>
+                          <td>${version.downloadlink }</td>
+                          <td>${version.modifydate } </td>
                         </tr>
-                        <tr>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>@fat</td>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>@fat</td>
-                        </tr>
-                        <tr>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>@twitter</td>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>@twitter</td>
-                          
-                        </tr>
+                        
+                      </c:forEach>
+                      
                       </tbody>
                     </table>
               		</div><!--历史版本列表 end-->
@@ -206,48 +243,55 @@
                     <!--右边三个图标的HTMLend-->
                     <div class="clearfix"></div><!--bootstrap水平线？-->
                   </div><!--题目3title end-->
+                 
                   
                   <div class="x_content"><!--内容content-->
                     <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
+                    <form id="demo-form2"  method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath }/dev/upload"  data-parsley-validate class="form-horizontal form-label-left">
+ <input type="hidden" name="id" value="${info.id}" />
+  <input type="hidden" name="engname" value="${info.apkname}" />
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="版本号">版本号<span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="versionNo" >版本号<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="版本号" required="required" class="form-control col-md-7 col-xs-12" name="版本号">
+                          <input type="text" id="versionNo" required="required" class="form-control col-md-7 col-xs-12" name="versionNo" />
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="版本大小">版本大小 <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="versionSize">版本大小 <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="版本大小" name="版本大小" required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="versionSize" name="versionSize" required="required" class="form-control col-md-7 col-xs-12" />
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="发布状态" class="control-label col-md-3 col-sm-3 col-xs-12">发布状态<span class="required">*</span></label>
+                        <label for="pubStatus" class="control-label col-md-3 col-sm-3 col-xs-12">发布状态<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="发布状态" class="form-control col-md-7 col-xs-12" type="text" name="发布状态">
+                        
+                        <select name="pubStatus" id="pubStatus" style="border: 2px solid black;  border-radius: 5px;width: 180px;height: 26px;">
+     						<option>--请选择--</option>
+     					 <option>--请选择--</option>
+     				</select>&nbsp; &nbsp; 
+                        
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="版本简介" class="control-label col-md-3 col-sm-3 col-xs-12">版本简介<span class="required">*</span></label>
+                        <label for="versionInfo" class="control-label col-md-3 col-sm-3 col-xs-12">版本简介<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        	<textarea  class="form-control" rows="3" placeholder="简介"></textarea>
+                        	<textarea  class="form-control" name="versionInfo" rows="3" placeholder="简介"></textarea>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label for="apk文件" class="control-label col-md-3 col-sm-3 col-xs-12">apk文件<span class="required">*</span></label>
+                       <div class="form-group">
+                        <label for="apkName" class="control-label col-md-3 col-sm-3 col-xs-12">apk文件<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="apkName" class="form-control col-md-7 col-xs-12" type="file" name="apkName">
+                          <input id="apkName" class="form-control col-md-7 col-xs-12" type="file" name="apkName" />
                         </div>
                       </div>
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                           <button type="submit" class="btn btn-primary">保存</button>
-                          <button type="submit" class="btn btn-success">返回</button>
+                          <button type="button" class="btn btn-primary" id="goBack" onclick="back()">返回</button>
                         </div>
                       </div>
 
@@ -273,16 +317,5 @@
       </div>
     </div>
 
-    <!-- jQuery -->
-    <script src="${pageContext.request.contextPath }/statics/js/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="${pageContext.request.contextPath }/statics/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="${pageContext.request.contextPath }/statics/js/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="${pageContext.request.contextPath }/statics/js/nprogress.js"></script>
-
-    <!-- Custom Theme Scripts -->
-    <script src="${pageContext.request.contextPath }/statics/js/custom.min.js"></script>
   </body>
 </html>

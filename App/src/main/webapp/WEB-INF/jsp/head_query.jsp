@@ -42,9 +42,7 @@
    $(function(){
 	   //隐藏表格
 	   $(".hideTable").hide();
-	   //APP状态
-	  /*  $("#app_state").click(function(){ */
-		 //  alert("come into");
+	   
 		    $.ajax({
 				url:"${pageContext.request.contextPath}/status",
 				type:"GET",
@@ -63,11 +61,7 @@
 						} 
 					}
 				}
-			/* })  */
-			/*  var txt1="<p>文本。</p>"; 
-			 var $opt = $("<option></option>").html("22222222")
-			 .attr("value",222);
-		   $("#app_state").append($opt); */
+			
 		   
 	   });
 	   

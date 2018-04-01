@@ -1,15 +1,23 @@
 package cn.app.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.app.pojo.Category;
 import cn.app.pojo.Dictionary;
@@ -166,6 +174,7 @@ public class DevController {
 					session.setAttribute("TotalCount", TotalCount);
 					session.setAttribute("totalPages", totalPages);
 					session.setAttribute("now_page", now_page);
+					session.setAttribute("pubList", pubList);
 					
 				}catch(Exception e) {
 					e.printStackTrace();
@@ -305,9 +314,90 @@ public class DevController {
 		return "dev/dev_app_maintenance";
 	}
 	
+	@RequestMapping("/addVersion")
+	public String addVersion(int id,HttpSession session) {
+	
+	Information information = 	infoService.getInfoById(id);
+	List<Version> versionList = versionService.getVersionByAppId(id);
+		
+	session.setAttribute("info", information);
+	session.setAttribute("versionList", versionList);
+	
+		return "dev/add_version";
+	}
 	
 	
 	
+	
+	
+	
+	@RequestMapping(value="/upload",method=RequestMethod.POST)
+	public String addResolver(HttpServletRequest request,
+			Long id,String versionNo,String versionSize,String pubStatus,String versionInfo,String engname,
+            @RequestParam(value="apkName",required=false) MultipartFile file) {
+		
+		Version v = null;
+		
+		/*System.out.println(id);
+		
+		System.out.println(versionNo);
+		System.out.println(versionSize);
+		
+		System.out.println(pubStatus);
+		
+		System.out.println(versionInfo);*/
+		
+		String myPath = null;
+		  //如果文件不为空，写入上传路径
+      if(!file.isEmpty()) {
+            //上传文件路径
+            String path = request.getServletContext().getRealPath("/statics/img");
+            
+            String lowpath = null;
+            String realpath = request.getContextPath() + "/statics/img";
+            //上传文件名
+            String filename = file.getOriginalFilename();
+            File filepath = new File(path,filename);
+            //判断路径是否存在，如果不存在就创建一个
+            if (!filepath.getParentFile().exists()) { 
+                filepath.getParentFile().mkdirs();
+            }
+            //将上传文件保存到一个目标文件当中
+            try {
+            	myPath = path + File.separator + filename;
+            	lowpath = realpath + File.separator + filename;
+				file.transferTo(new File(path + File.separator + filename));
+				System.out.println(myPath+"======*****");
+				System.out.println(lowpath+"======*****");
+				
+				v = new Version();
+				v.setAppid(id);
+				v.setVersionno(versionNo);
+				int versionsize = Integer.parseInt(versionSize);
+				v.setVersionsize(versionsize);
+				Long pubStatu = Long.parseLong(pubStatus);
+				v.setPublishstatus(pubStatu);
+				v.setVersioninfo(versionInfo);
+				v.setDownloadlink(lowpath);
+				v.setApklocpath(myPath);
+				v.setApkfilename(engname);
+				v.setCreationdate(new Date());
+				Long  p = 1L; 
+				v.setCreatedby(p);
+			 int count = versionService.insertSelective(v);
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+            
+            return "redirect:maintenance";
+        } else {
+        	
+        	return "redirect:maintenance";
+        }
+		
+	}
 	
 	
 }

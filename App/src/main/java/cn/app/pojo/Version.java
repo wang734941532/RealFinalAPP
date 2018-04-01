@@ -16,7 +16,7 @@ public class Version {
 
     private String downloadlink;
 
-    private BigDecimal versionsize;
+    private int versionsize;
 
     private Long createdby;
 
@@ -78,11 +78,11 @@ public class Version {
         this.downloadlink = downloadlink == null ? null : downloadlink.trim();
     }
 
-    public BigDecimal getVersionsize() {
+    public int getVersionsize() {
         return versionsize;
     }
 
-    public void setVersionsize(BigDecimal versionsize) {
+    public void setVersionsize(int versionsize) {
         this.versionsize = versionsize;
     }
 

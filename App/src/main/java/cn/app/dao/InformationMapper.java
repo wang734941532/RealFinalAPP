@@ -49,6 +49,9 @@ public interface InformationMapper {
    Information downOne(int id);
    //ÉÏ¼Ü²Ù×÷
   int download(int id);
+  
+  //É¾³ý
+  int delete(int id);
     
     
 }

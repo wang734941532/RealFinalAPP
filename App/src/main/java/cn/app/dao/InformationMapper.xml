@@ -83,4 +83,11 @@
   
   </update>
   
+  <delete id="delete" parameterType="int">
+  
+    DELETE FROM app_info WHERE id = #{id}
+    
+  </delete>
+  
+  
 </mapper>
