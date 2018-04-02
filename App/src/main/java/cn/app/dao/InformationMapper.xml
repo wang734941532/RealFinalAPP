@@ -92,7 +92,7 @@
 <insert id="insertSelective" parameterType="Information">
 INSERT INTO app_info(softwareName,APKName,supportROM,interfaceLanguage,softwareSize,downloads,flatformId, 
 categoryLevel1,categoryLevel2,categoryLevel3,status, appInfo,logoPicPath,logoLocPath)
-  VALUES (#{softwarename}, #{apkname},#{supportrom},#{interfacelanguage},#{softwaresize},#{downloads},#{flatformid},#{categorylevel1},#{categorylevel2},#{categorylevel3},#{status},#{appinfo},#{logopicpath},#{logolocpath})
+  VALUES(#{softwarename}, #{apkname},#{supportrom},#{interfacelanguage},#{softwaresize},#{downloads},#{flatformid},#{categorylevel1},#{categorylevel2},#{categorylevel3},#{status},#{appinfo},#{logopicpath},#{logolocpath})
 
 
 </insert>

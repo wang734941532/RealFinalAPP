@@ -343,6 +343,7 @@ public class DevController {
 	public String addVersion(int id,int appId,HttpSession session) {
 	
 	Information information = 	infoService.getInfoById(appId);
+	System.out.println(information+"information==========");
 	Version version = versionService.getVersionById(id);
 	List<Version> versionList = versionService.getVersionByAppId(appId);
 	
@@ -380,7 +381,7 @@ public class DevController {
 	
 	@RequestMapping(value="/upload",method=RequestMethod.POST)
 	public String addResolver(HttpServletRequest request,
-			Long id,String versionNo,String versionSize,String pubStatus,String versionInfo,String engname,
+			Long id,String versionNo,Long versionSize,String pubStatus,String versionInfo,String engname,
             @RequestParam(value="apkName",required=false) MultipartFile file) {
 		
 		Version v = null;
@@ -420,8 +421,7 @@ public class DevController {
 				v = new Version();
 				v.setAppid(id);
 				v.setVersionno(versionNo);
-				int versionsize = Integer.parseInt(versionSize);
-				v.setVersionsize(versionsize);
+				v.setVersionsize(versionSize);
 				Long pubStatu = Long.parseLong(pubStatus);
 				v.setPublishstatus(pubStatu);
 				v.setVersioninfo(versionInfo);
@@ -449,18 +449,20 @@ public class DevController {
 	
 	@RequestMapping(value="/nowModifyVersion",method=RequestMethod.POST)
 	public String nowModifyVersion(HttpServletRequest request,
-			Long id,String versionNo,String versionSize,String pubStatus,String versionInfo,String engname,
+			Long vid,String versionNo,Long versionSize,Long pubStatus,String versionInfo,String engname,
             @RequestParam(value="apkName",required=false) MultipartFile file) {
-		
+		System.out.println(versionNo);
+		System.out.println(vid);
+		System.out.println(engname);
+		System.out.println(versionSize);
 		Version v = null;
-		
+		 String lowpath = null;
 		String myPath = null;
 		  //如果文件不为空，写入上传路径
       if(!file.isEmpty()) {
             //上传文件路径
             String path = request.getServletContext().getRealPath("/statics/img");
-            
-            String lowpath = null;
+           
             String realpath = request.getContextPath() + "/statics/img";
             //上传文件名
             String filename = file.getOriginalFilename();
@@ -474,36 +476,35 @@ public class DevController {
             	myPath = path + File.separator + filename;
             	lowpath = realpath + File.separator + filename;
 				file.transferTo(new File(path + File.separator + filename));
-				System.out.println(myPath+"======*****");
-				System.out.println(lowpath+"======*****");
 				
-				v = new Version();
-				v.setId(id);
-				v.setVersionno(versionNo);
-				int versionsize = Integer.parseInt(versionSize);
-				v.setVersionsize(versionsize);
-				Long pubStatu = Long.parseLong(pubStatus);
-				v.setPublishstatus(pubStatu);
-				v.setVersioninfo(versionInfo);
-				v.setDownloadlink(lowpath);
-				v.setApklocpath(myPath);
-				v.setApkfilename(engname);
-				v.setModifydate(new Date());
-				Long  p = 1L; 
-				v.setModifyby(p);
-			 int count = versionService.updateByPrimaryKeySelective(v);
+				
+			
 				
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
             
-            return "redirect:maintenance";
-        } else {
-        	
-        	return "redirect:maintenance";
-        }
+      }
+            System.out.println(myPath+"======*****");
+			System.out.println(lowpath+"======*****");
+        	v = new Version();
+			v.setId(vid);
+			v.setVersionno(versionNo);
+			v.setVersionsize(versionSize);
+			v.setPublishstatus(pubStatus);
+			v.setVersioninfo(versionInfo);
+			v.setDownloadlink(lowpath);
+			v.setApklocpath(myPath);
+			v.setApkfilename(engname);
+			v.setModifydate(new Date());
+			
 		
+		 int count = versionService.updateByPrimaryKeySelective(v);
+            
+            
+            return "redirect:maintenance";
+        	
 	}
 	
 	
@@ -534,6 +535,18 @@ public class DevController {
 	information.setStatus(state);
 	information.setAppinfo(desc);
 	
+	System.out.println(Sname);
+	System.out.println(Aname);
+	System.out.println(rom);
+	System.out.println(gui);
+	System.out.println(size);
+	System.out.println(count);
+	System.out.println(platform);
+	System.out.println(sort1);
+	System.out.println(sort2);
+	System.out.println(sort3);
+	System.out.println(state);
+	System.out.println(desc);
 	
 		String myPath = null;
 		  //如果文件不为空，写入上传路径

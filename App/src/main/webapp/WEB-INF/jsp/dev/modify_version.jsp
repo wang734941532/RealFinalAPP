@@ -249,9 +249,9 @@
                   
                   <div class="x_content"><!--内容content-->
                     <br />
-                    <form id="demo-form2"  method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath }/dev/upload"  data-parsley-validate class="form-horizontal form-label-left">
- <input type="hidden" name="id" value="${info.id}" />
-  <input type="hidden" name="engname" value="${info.apkname}" />
+                    <form id="demo-form2"  method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath }/dev/nowModifyVersion"  data-parsley-validate class="form-horizontal form-label-left">
+	 <input type="hidden" name="id" value="${info.id}" />
+  	<input type="hidden" name="engname" value="${info.apkname}" />
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="versionNo" >版本号<span class="required">*</span>
                         </label>

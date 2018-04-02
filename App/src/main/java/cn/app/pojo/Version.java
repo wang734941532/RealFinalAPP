@@ -16,7 +16,7 @@ public class Version {
 
     private String downloadlink;
 
-    private int versionsize;
+    private Long versionsize;
 
     private Long createdby;
 
@@ -78,11 +78,11 @@ public class Version {
         this.downloadlink = downloadlink == null ? null : downloadlink.trim();
     }
 
-    public int getVersionsize() {
+    public Long getVersionsize() {
         return versionsize;
     }
 
-    public void setVersionsize(int versionsize) {
+    public void setVersionsize(Long versionsize) {
         this.versionsize = versionsize;
     }
 

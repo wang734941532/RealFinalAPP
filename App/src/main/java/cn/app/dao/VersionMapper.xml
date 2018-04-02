@@ -26,8 +26,8 @@
  
  <update id="updateByPrimaryKeySelective" parameterType="Version">
  
-  UPDATE app_version SET versionNo = #{versionsize},versionSize =#{versionsize}, publishStatus =#{publishstatus},
-  versionInfo = #{versioninfo},downloadLink = #{downloadlink},apkLocPath=#{apklocpath},modifyBy =#{modifyby},
+  UPDATE app_version SET versionNo = #{versionno},versionSize =#{versionsize}, publishStatus =#{publishstatus},
+  versionInfo = #{versioninfo},downloadLink = #{downloadlink},apkLocPath=#{apklocpath},modifyBy ='1',
   modifyDate = #{modifydate},apkFileName =#{apkfilename}  WHERE  id= #{id}
   
  

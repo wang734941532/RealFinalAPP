@@ -80,7 +80,7 @@
 						console.log(data[1]);
 						 for(var i = 0; i<data.length; i++){
 							var $opt = $("<option></option>").html(data[i].valuename)
-															 .attr("value",data[i].id);
+															 .attr("value",data[i].valueid);
 							
 							$("#platform").append($opt);
 						} 

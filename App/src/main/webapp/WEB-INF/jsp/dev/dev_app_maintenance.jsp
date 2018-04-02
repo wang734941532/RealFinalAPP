@@ -58,21 +58,31 @@
 			  }
     	//删除
 		function m3(id){
+    		
+			 var r=confirm("确认删除吗")
+			  if (r==true)
+			    {
+					$.ajax({
+						url:"${pageContext.request.contextPath}/delete?id="+id,
+						type:"GET",
+						success:function(data){
+							if(data == true){
+								alert("删除成功");
+								window.location.href="${pageContext.request.contextPath}/dev/maintenance";
+							}
+							if(data == false){
+								alert("删除失败");
+								window.location.href="${pageContext.request.contextPath}/dev/maintenance";
+							}
+						}
+					});
+			    }
+			  else
+			    {
+			   alert("删除取消");
+			    }
 			
-			$.ajax({
-				url:"${pageContext.request.contextPath}/delete?id="+id,
-				type:"GET",
-				success:function(data){
-					if(data == true){
-						alert("删除成功");
-						window.location.href="${pageContext.request.contextPath}/dev/maintenance";
-					}
-					if(data == false){
-						alert("删除失败");
-						window.location.href="${pageContext.request.contextPath}/dev/maintenance";
-					}
-				}
-			});
+		
 			
 			  }
     

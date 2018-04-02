@@ -363,7 +363,10 @@ String basePath = request.getScheme() + "://"
                       <div class="form-group">
                         <label for="versionStatus" class="control-label col-md-3 col-sm-3 col-xs-12">发布状态<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="versionStatus" class="form-control col-md-7 col-xs-12" readonly value="<%=s6 %>"   type="text" name="versionStatus">
+                       
+                        <input id="versionStatus" class="form-control col-md-7 col-xs-12" readonly value="<%=s6 %>"   type="text" name="versionStatus">
+                         
+                          
                         </div>
                       </div>
                       <div class="form-group">
