@@ -54,6 +54,9 @@ public interface InformationMapper {
   int delete(int id);
   
   
+  int updateAppByPK(Information information);
+  
+  
     
     
 }

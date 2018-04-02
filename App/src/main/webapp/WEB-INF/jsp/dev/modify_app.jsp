@@ -42,14 +42,164 @@ String basePath = request.getScheme() + "://"
 + request.getServerName() + ":" + request.getServerPort() 
 + path + "/";//返回形式http://localhost:8080/upload/ 
 %> 
-     	<script type="text/javascript">
+     	 <script type="text/javascript">
      	$(function(){
 			var p = $(".passornot").val();
+			$("#logo").hide()
 			
+			
+			
+			$("#status").focus(function(){
+				//状态
+				 $.ajax({
+						url:"${pageContext.request.contextPath}/status",
+						type:"GET",
+						success:function(data){
+							if(data!=null){
+								
+								//alert("result");
+								//$("#app_state").removeChild();
+								$("#status").find("option").remove();
+								console.log(data[1]);
+								 for(var i = 0; i<data.length; i++){
+									var $opt = $("<option></option>").html(data[i].valuename)
+																	 .attr("value",data[i].valueid);
+									
+									$("#status").append($opt);
+								} 
+							}
+						}
+			   });
+				
+				
+				
+			});
+			
+			$("#platform").focus(function(){
+				
+				
+				//平台
+				 $.ajax({
+						url:"${pageContext.request.contextPath}/flatform",
+						type:"GET",
+						success:function(data){
+							if(data!=null){
+								
+								//alert("result");
+								//$("#app_state").removeChild();
+								$("#platform").find("option").remove();
+								console.log(data[1]);
+								 for(var i = 0; i<data.length; i++){
+									var $opt = $("<option></option>").html(data[i].valuename)
+																	 .attr("value",data[i].valueid);
+									
+									$("#platform").append($opt);
+								} 
+							}
+						}
+					}) 
+				
+				
+				
+			});
+			
+			
+			
+				//分类1
+				$("#sort1").focus(function(){
+					
+					
+					 $.ajax({
+							url:"${pageContext.request.contextPath}/levelOne",
+							type:"GET",
+							success:function(data){
+								if(data!=null){
+									$("#sort1").find("option").remove();
+									console.log(data[1]);
+									 for(var i = 0; i<data.length; i++){
+										var $opt = $("<option></option>").html(data[i].categoryname)
+																		 .attr("value",data[i].id);
+										/*  if(i == 0){
+											$opt.attr("selected",true);
+										}  */
+										$("#sort1").append($opt);
+									} 
+								}
+							}
+						}) 
+					
+				});
+				
+				
+			
+					
+					
+					   //二级分类
+				    $("#sort1").change(function(){ 
+					   var options=$("#sort1 option:selected").val(); 
+					   console.log(options);
+						 //  alert("come into");
+						    $.ajax({
+								url:"${pageContext.request.contextPath}/sort2?sort1option="+options,
+								type:"GET",
+								success:function(data){
+									if(data!=null){
+										
+										//alert("result");
+										//$("#app_state").removeChild();
+										$("#sort2").find("option").remove();
+										console.log(data[1]);
+										 for(var i = 0; i<data.length; i++){
+											var $opt = $("<option></option>").html(data[i].categoryname)
+																			 .attr("value",data[i].id);
+											
+											$("#sort2").append($opt);
+										} 
+									}
+								}
+							}) 
+						   
+					    }); 
+	    	 
+					
+			
+				
+		  	   $("#sort2").change(function(){
+		  		   var options=$("#sort2 option:selected").val(); 
+		  		   console.log(options);
+		  			 //  alert("come into");
+		  			    $.ajax({
+		  					url:"${pageContext.request.contextPath}/sort3?sort2option="+options,
+		  					type:"GET",
+		  					success:function(data){
+		  						if(data!=null){
+		  							
+		  							//alert("result");
+		  							//$("#app_state").removeChild();
+		  							$("#sort3").find("option").remove();
+		  							console.log(data[1]);
+		  							 for(var i = 0; i<data.length; i++){
+		  								var $opt = $("<option></option>").html(data[i].categoryname)
+		  																 .attr("value",data[i].id);
+		  								 
+		  								$("#sort3").append($opt);
+		  							} 
+		  						}
+		  					}
+		  				}) 
+		  			   
+		  		   });
+		  	   
+		  	   
+		  	   $(".picture").click(function(){
+		  		
+  				$("#logo").show();		  		   
+		  		   
+		  	   });
 			
 
 		});
-	</script>
+	</script> 
 </head>
  <body class="nav-md">
     <div class="container body">
@@ -185,44 +335,43 @@ String basePath = request.getScheme() + "://"
               		</div><!--题目2title  end-->
               		<div class="x_content"><!--APP基础信息内容content-->
                     <br />
-                    <form id="demo-form2" data-parsley-validate  class="form-horizontal form-label-left">
-
+                    <form id="demo-form2" data-parsley-validate  class="form-horizontal form-label-left" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath }/dev/realModifyApp" >
 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="softName">软件名称<span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="Sname">软件名称<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="softName" readonly="readonly" value="${info.softwarename }" class="form-control col-md-7 col-xs-12" name="softName">
+                          <input type="text" id="Sname"  value="${info.softwarename }" class="form-control col-md-7 col-xs-12" name="Sname">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="apkName" class="control-label col-md-3 col-sm-3 col-xs-12">APK名称<span class="required">*</span></label>
+                        <label for="Aname" class="control-label col-md-3 col-sm-3 col-xs-12">APK名称<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="apkName" class="form-control col-md-7 col-xs-12" type="text" value="${info.apkname }" readonly name="apkName">
+                          <input id="Aname" class="form-control col-md-7 col-xs-12" type="text" value="${info.apkname }" name="Aname">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="ROM" class="control-label col-md-3 col-sm-3 col-xs-12">支持ROM<span class="required">*</span></label>
+                        <label for="rom" class="control-label col-md-3 col-sm-3 col-xs-12">支持rom<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="ROM" class="form-control col-md-7 col-xs-12" type="text" value="${info.supportrom }"readonly name="ROM">
+                          <input id="rom" class="form-control col-md-7 col-xs-12" type="text" value="${info.supportrom }" name="rom">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="lang" class="control-label col-md-3 col-sm-3 col-xs-12">界面语言<span class="required">*</span></label>
+                        <label for="gui" class="control-label col-md-3 col-sm-3 col-xs-12">界面语言<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="lang" class="form-control col-md-7 col-xs-12"  value="${info.interfacelanguage }" readonly type="text" name="lang">
+                          <input id="gui" class="form-control col-md-7 col-xs-12"  value="${info.interfacelanguage }"  type="text" name="gui">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="softSize" class="control-label col-md-3 col-sm-3 col-xs-12">软件大小<span class="required">*</span></label>
+                        <label for="size" class="control-label col-md-3 col-sm-3 col-xs-12">软件大小<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="softSize" class="form-control col-md-7 col-xs-12" type="text" value="${info.softwaresize }" readonly  name="softSize">
+                          <input id="size" class="form-control col-md-7 col-xs-12" type="text" value="${info.softwaresize }"   name="size">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="downloads" class="control-label col-md-3 col-sm-3 col-xs-12">下载次数<span class="required">*</span></label>
+                        <label for="count" class="control-label col-md-3 col-sm-3 col-xs-12">下载次数<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="downloads" class="form-control col-md-7 col-xs-12" value="${info.downloads }" readonly  type="text" name="downloads">
+                          <input id="count" class="form-control col-md-7 col-xs-12" value="${info.downloads }"  type="text" name="count">
                         </div>
                       </div>
               
@@ -259,20 +408,48 @@ String basePath = request.getScheme() + "://"
                       <div class="form-group">
                         <label for="platform" class="control-label col-md-3 col-sm-3 col-xs-12">所属平台<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="platform" class="form-control col-md-7 col-xs-12" value="<%=s5 %>" readonly  type="text" name="platform">
+                         <select id="platform" name="platform" data-validate-length="6,8" class="form-control col-md-7 col-xs-12">
+                        			<option selected value="${info.flatformid }"><%=s5 %></option>
+                        		  
+                        	</select>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="sort">所属分类 <span class="required">*</span>
-                        </label>
+                      
+                     <div class="item form-group">
+                        <label for="sort1" class="control-label col-md-3 col-sm-3 col-xs-12">一级分类</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="sort" name="sort" required="required"  value="<%=s1 %>--><%=s2 %>--><%=s3 %>" readonly class="form-control col-md-7 col-xs-12">
+                        		<select id="sort1" name="sort1" data-validate-length="6,8" class="form-control col-md-7 col-xs-12">
+                        			<option selected value="${info.categorylevel1 }"><%=s1 %></option>
+                        		  
+                        	</select>
                         </div>
                       </div>
+                      
+                        <div class="item form-group">
+                        <label for="sort2" class="control-label col-md-3 col-sm-3 col-xs-12">二级分类</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        		<select id="sort2" name="sort2" data-validate-length="6,8" class="form-control col-md-7 col-xs-12">
+                        		<option selected value="${info.categorylevel2 }"><%=s2 %></option>
+                        	</select>
+                        </div>
+                      </div>
+                      
+                      
+                       <div class="item form-group">
+                        <label for="sort3" class="control-label col-md-3 col-sm-3 col-xs-12">三级分类</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        		<select id="sort3" name="sort3" data-validate-length="6,8" class="form-control col-md-7 col-xs-12">
+                        			<option selected value="${info.categorylevel3 }"><%=s3 %></option>
+                        	</select>
+                        </div>
+                      </div>
+                      
                       <div class="form-group">
                         <label for="status" class="control-label col-md-3 col-sm-3 col-xs-12">APP状态<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="status" class="form-control col-md-7 col-xs-12"  value="<%=s4 %>" readonly type="text" name="status">
+                        		<select id="status" name="status" data-validate-length="6,8" class="form-control col-md-7 col-xs-12">
+                        			<option selected value="${info.status }"><%=s4 %></option>
+                        	</select>
                         </div>
                       </div>
                       <div class="form-group">
@@ -281,74 +458,34 @@ String basePath = request.getScheme() + "://"
                         	<textarea  class="form-control" rows="3" placeholder="简介" name="desc" id="desc">${info.appinfo }</textarea>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label for="logo" class="control-label col-md-3 col-sm-3 col-xs-12">LOGO图片<span class="required">*</span></label>
+                         <div class="form-group">
+                        <label for="logopic" class="control-label col-md-3 col-sm-3 col-xs-12">LOGO图片<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                        	<img src="${info.logopicpath }" style="width:60px;height:60px"/>
+                        	<img src="${info.logopicpath }"  class="picture" style="width:60px;height:60px"/>
+                        	<input type="file" id="logo" name="logo" data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
+                   
+                      <div class="form-group">
+                     
+					<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+				<button type="submit" class="btn btn-success ">修改</button>
+					<input type="hidden" name="id" value="${info.id }" class="passornot">
+				<button type="submit" class="btn btn-success"><a href="${pageContext.request.contextPath }/dev/maintenance">返回</a></button>
+												</div>
+											</div>
                     
                     </form>
                   </div>
                   <!--APP基础信息内容content end-->
-              		  <div class="form-group">
-                     
-												<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-				<button type="submit" class="btn btn-success ooo" >修改</button>
-				<input type="hidden" name="no1" value="${info.id }" class="passornot">
-				<button type="submit" class="btn btn-success"><a href="${pageContext.request.contextPath }/dev/maintenance">返回</a></button>
-												</div>
-											</div>
+              		
               		
               		
                   <div class="x_title"><!--题目3title-->
-                    <h2> 最新版本信息 </h2>
-                    <!--右边三个图标的HTML-->
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                    </ul>
-                    <!--右边三个图标的HTMLend-->
-                    <div class="clearfix"></div><!--bootstrap水平线？-->
+                    
                   </div><!--题目3title end-->
                   <div class="x_content"><!--最新版本信息内容content-->
-                    <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="version">版本号<span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="version" readonly value="${version.versionno }" class="form-control col-md-7 col-xs-12" name="version">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="versionSize">版本大小 <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="versionSize" name="versionSize" readonly value="${version.versionsize }" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-                      
-                      <div class="form-group">
-                        <label for="versionStatus" class="control-label col-md-3 col-sm-3 col-xs-12">发布状态<span class="required">*</span></label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="versionStatus" class="form-control col-md-7 col-xs-12" readonly value="<%=s6 %>"   type="text" name="versionStatus">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="versionDesc" class="control-label col-md-3 col-sm-3 col-xs-12">版本简介<span class="required">*</span></label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                        	<textarea  class="form-control" rows="3" id="versionDesc" readonly name="versionDesc" >${version.versioninfo}</textarea>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="apk" class="control-label col-md-3 col-sm-3 col-xs-12">apk文件<span class="required">*</span></label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="apk" class="form-control col-md-7 col-xs-12"    readonly value="${version.apkfilename}"  type="text" name="apk">
-                        </div>
-                      </div>
-                      </form>
+                   
                     </div><!--最新把版本信息 end-->
                 </div><!--??面板end-->
                 

@@ -96,5 +96,26 @@ categoryLevel1,categoryLevel2,categoryLevel3,status, appInfo,logoPicPath,logoLoc
 
 
 </insert>
+
+
+
+<update id="updateAppByPK"  parameterType="Information">
+<if test="logopicpath ==null">
+UPDATE  app_info SET softwareName =#{softwarename},APKName = #{apkname},supportROM = #{supportrom},
+  interfaceLanguage = #{interfacelanguage},softwareSize = #{softwaresize},downloads = #{downloads},
+  flatformId =#{flatformid},categoryLevel1 = #{categorylevel1},categoryLevel2 = #{categorylevel2},
+  categoryLevel3 =#{categorylevel3},status =#{status}, appInfo =#{appinfo} WHERE id = #{id}
+
+
+</if>
+<if test="logopicpath !=null">
+UPDATE  app_info SET softwareName =#{softwarename},  APKName = #{apkname},supportROM = #{supportrom},
+  interfaceLanguage = #{interfacelanguage},softwareSize = #{softwaresize},downloads = #{downloads},
+  flatformId =#{flatformid},categoryLevel1 = #{categorylevel1},categoryLevel2 = #{categorylevel2},
+  categoryLevel3 =#{categorylevel3},status =#{status},appInfo =#{appinfo},
+logoPicPath = #{logopicpath},logoLocPath =#{logolocpath} WHERE id = #{id}
+
+</if>
+</update>
   
 </mapper>

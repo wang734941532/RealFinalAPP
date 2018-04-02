@@ -122,4 +122,10 @@ public class InfoServiceImpl implements InfoService {
 		return informationMapper.insertSelective(record);
 	}
 
+
+	@Override
+	public int updateAppByPK(Information information) {
+		return informationMapper.updateAppByPK(information);
+	}
+
 }

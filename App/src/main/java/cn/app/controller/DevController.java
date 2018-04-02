@@ -635,5 +635,86 @@ public class DevController {
 	}
 	
 	
+	@RequestMapping(value="/realModifyApp",method=RequestMethod.POST)
+	public String realModifyApp(HttpServletRequest request,
+			String Sname,String Aname,String rom,String gui, Long size,Long count,Long platform,
+			Long sort1,Long sort2,Long sort3,Long status,String desc,Long id,
+            @RequestParam(value="logo",required=false) MultipartFile file) {
+		
+	Information information = new Information();
+	information.setSoftwarename(Sname);
+	information.setApkname(Aname);
+	information.setSupportrom(rom);
+	information.setInterfacelanguage(gui);
+	information.setSoftwaresize(size);
+	information.setDownloads(count);
+	information.setFlatformid(platform);
+	information.setCategorylevel1(sort1);
+	information.setCategorylevel2(sort2);
+	information.setCategorylevel3(sort3);
+	information.setStatus(status);
+	information.setAppinfo(desc);
+	information.setId(id);
+	
+	System.out.println(Sname);
+	System.out.println(Aname);
+	System.out.println(rom);
+	System.out.println(gui);
+	System.out.println(size);
+	System.out.println(count);
+	System.out.println(platform);
+	System.out.println(sort1);
+	System.out.println(sort2);
+	System.out.println(sort3);
+	System.out.println(status+"----status");
+	System.out.println(desc+"===desc");
+	System.out.println(id+"===desc");
+		String myPath = null;
+		 String lowpath = null;
+		  //如果文件不为空，写入上传路径
+      if(!file.isEmpty()) {
+            //上传文件路径
+            String path = request.getServletContext().getRealPath("/statics/img");
+            
+           
+            String realpath = request.getContextPath() + "/statics/img";
+            //上传文件名
+            String filename = file.getOriginalFilename();
+            File filepath = new File(path,filename);
+            //判断路径是否存在，如果不存在就创建一个
+            if (!filepath.getParentFile().exists()) { 
+                filepath.getParentFile().mkdirs();
+            }
+            //将上传文件保存到一个目标文件当中
+            try {
+            	myPath = path + File.separator + filename;
+            	lowpath = realpath + File.separator + filename;
+				file.transferTo(new File(path + File.separator + filename));
+				System.out.println(lowpath+"======*****");
+				System.out.println(myPath+"======*****");
+				information.setLogolocpath(myPath);
+				information.setLogopicpath(lowpath);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+           
+        }
+      System.out.println("before");
+      
+      
+   
+		int c = infoService.updateAppByPK(information);
+	
+     
+      System.out.println("after");
+      return "error/error";
+	}
+	
+	
+	
+	
+	
+	
 	
 }
