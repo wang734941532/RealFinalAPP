@@ -311,10 +311,14 @@ String basePath = request.getScheme() + "://"
 				<button type="submit" class="btn btn-success"><a href="${pageContext.request.contextPath }/dev/maintenance">返回</a></button>
 												</div>
 											</div>
+						<form action="${pageContext.request.contextPath }/download" method="get">
+					   	<input type="hidden" name="fileName" value="${version.apkfilename }" />
+					 	<button type="submit" >下载 </button>
+					   </form>
               		
-              		
+              		 
                   <div class="x_title"><!--题目3title-->
-                    <h2> 最新版本信息 </h2>
+                   <h2  style="padding-right:400px ;"> 最新版本信息 </h2>
                     <!--右边三个图标的HTML-->
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -388,6 +392,5 @@ String basePath = request.getScheme() + "://"
       </div>
     </div>
 
-   
   </body>
 </html>

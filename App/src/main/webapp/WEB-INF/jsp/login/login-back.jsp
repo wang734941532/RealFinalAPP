@@ -14,6 +14,16 @@
   
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath }/statics/css/custom.min.css" rel="stylesheet">
+    
+    <script type="text/javascript">
+
+  
+   function m1(){
+		   window.location.href="${pageContext.request.contextPath }/login";
+  }
+
+</script>
+    
 	</head>
 	<body class="login">
 		<div>
@@ -30,6 +40,7 @@
 						<div>
 							<input type="submit" name="loginbtn" id="" value="登录" class="btn btn-success btn-lg  submit" />
 							<input type="reset" name="resetbtn" id="" value="重置" class="btn btn-default btn-lg  reset" />
+							<input type="button" name="resetbtn" id="" value="首页" onclick="m1()"  class="btn btn-default btn-lg  reset" />
 						</div>
 
 						<div class="separator">

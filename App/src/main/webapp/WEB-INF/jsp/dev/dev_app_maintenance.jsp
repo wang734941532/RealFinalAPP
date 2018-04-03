@@ -356,9 +356,9 @@
 														<td>
 															<!-- Split button -->
 															<div class="btn-group">
-																<button type="button" class="btn btn-danger">操作</button>
+																
 																<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        										<span class="caret"></span>
+                        										操作  <span class="caret"></span>
                         							<span class="sr-only">Toggle Dropdown</span>
                       									</button>
                       									
