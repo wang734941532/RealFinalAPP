@@ -1,3 +1,7 @@
+<%@page import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
+<%@page import="java.io.Console"%>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.Out"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ include file="../head_query.jsp" %>
@@ -195,7 +199,18 @@
                       <div class="clearfix"></div>
                       
                       
+                      <% 
+                    //APP索引
+                    Map map = (HashMap)session.getAttribute("map");
+                      //APP状态封装
+                    Map dicMap = (HashMap)session.getAttribute("dicMap");
+                       //APP平台
+					Map plamap = (HashMap)session.getAttribute("plaMap");
+                       
+					ApplicationContext ac= new ClassPathXmlApplicationContext("applicationContext-mybatis.xml");
+					VersionService vs =  (VersionService)ac.getBean("versionService");   
                       
+                      %>
                       <!--展示待审核数据  -->
 
   				<c:forEach items="${infoList }" var="info" varStatus="i">
@@ -213,12 +228,6 @@
                                 <c:set var="so5" value="${info.status }" scope="session"></c:set>
                               
                               <%
-                              //APP索引
-                              Map map = (HashMap)session.getAttribute("map");
-                              //APP状态封装
-                               Map dicMap = (HashMap)session.getAttribute("dicMap");
-                               //APP平台
-								 Map plamap = (HashMap)session.getAttribute("plaMap");
                               
                                Object a = session.getAttribute("so1");
                                Object b = session.getAttribute("so2");
@@ -246,7 +255,25 @@
                           <div class="col-xs-12 bottom text-center">
                             <div class="col-xs-12 col-sm-6 emphasis">
                               <p class="ratings">
-                                <a>版本号:${info.version.versionno }</a>
+                              
+                              <c:if test="${info.versionid != null}">
+                               <c:set var="no" value="${info.versionid }" scope="session"></c:set>  
+                            <%
+                           
+                              //VersionService vs = new VersionServiceImpl();
+                              Object abc = session.getAttribute("no");
+                             int id = Integer.parseInt(abc.toString());
+                           String v_No =  vs.getVersions(id);
+                             
+                              %> 
+                           
+                                <a>版本号:<%=v_No %></a>
+                              </c:if>
+                              
+                               <c:if test="${info.versionid == null}">
+                               <a>版本号:暂无</a>
+                              </c:if>
+                              
                                 <span></span>
                               </p>
                             </div>

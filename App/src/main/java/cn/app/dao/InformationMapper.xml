@@ -13,8 +13,7 @@
 
   <select id="getInfoByStatusId" resultMap="infolist">
   
- SELECT i.*,v.id v_id,v.versionNo vn  FROM app_info  i left join app_version  v  on  i.versionId = v.id
-  AND  i.status = #{statusId} limit #{pageCount},#{pageSize} 
+ SELECT * FROM app_info where status = #{statusId} limit #{pageCount},#{pageSize} 
     
   </select>
   
@@ -25,7 +24,7 @@
   
   
   <select id="getInfoCount" resultType="int">
-  select count(1) from app_info
+  select count(1) from app_info where status = 1
   </select>
   
   <update id="updateStatus" >

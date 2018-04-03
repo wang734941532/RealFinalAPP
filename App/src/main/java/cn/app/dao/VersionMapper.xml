@@ -33,4 +33,12 @@
  
  </update>
  
+ 
+ 
+ <select id="getVersions" resultType="java.lang.String">
+    
+  SELECT versionNo FROM app_version WHERE id=#{id}
+ 
+ </select>
+ 
 </mapper>

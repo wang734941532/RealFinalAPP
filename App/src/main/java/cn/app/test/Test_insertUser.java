@@ -16,6 +16,8 @@ import cn.app.dao.Dev_UserMapper;
 import cn.app.pojo.Dev_User;
 import cn.app.service.Dev_UserService;
 import cn.app.service.Dev_UserServiceImpl;
+import cn.app.service.VersionService;
+import cn.app.service.VersionServiceImpl;
 
 public class Test_insertUser {
 
@@ -56,6 +58,13 @@ public class Test_insertUser {
 		//int count=dev_UserService.register(dev_User);
 		//int count=dev_UserService.register(dev_User);
 		//System.out.println("count======"+count);
+		
+	}
+	@Test
+	public void test2() {
+		
+		 VersionService vs = new VersionServiceImpl();
+         Long abc = (Long)40L;
 		
 	}
 

@@ -16,4 +16,6 @@ public interface VersionService {
 	  int insertSelective(Version record);
 	  
 	  int updateByPrimaryKeySelective(Version record);
+	  
+	  String getVersions(int id);
 }

@@ -26,6 +26,7 @@ public interface VersionMapper {
     public List<Version> getVersionByAppId(int appId);
     
     
+    String getVersions(int id);
     
    
     

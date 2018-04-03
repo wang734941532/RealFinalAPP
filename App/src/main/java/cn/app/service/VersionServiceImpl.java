@@ -61,4 +61,11 @@ public class VersionServiceImpl implements VersionService {
 		return versionMapper.updateByPrimaryKeySelective(record);
 	}
 
+
+
+	@Override
+	public String getVersions(int id) {
+		return versionMapper.getVersions(id);
+	}
+
 }
