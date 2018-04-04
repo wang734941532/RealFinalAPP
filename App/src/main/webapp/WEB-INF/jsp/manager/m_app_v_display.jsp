@@ -1,3 +1,7 @@
+<%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@page import="cn.app.service.VersionService"%>
+<%@page import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page import="java.io.Console"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
@@ -60,9 +64,8 @@ String basePath = request.getScheme() + "://"
 				
 			});
 			
-			$(".qqq").click(function(){
 
-				$(".ooo").click(function(){
+				$(".qqq").click(function(){
 					$.ajax({
 						url:"${pageContext.request.contextPath}/verifyNo/"+p,
 						type:"GET",
@@ -76,7 +79,7 @@ String basePath = request.getScheme() + "://"
 					
 				});
 				
-			});
+			
 		});
 	</script>
 </head>
@@ -332,7 +335,7 @@ String basePath = request.getScheme() + "://"
               		
               		
                   <div class="x_title"><!--题目3title-->
-                    <h2> 最新版本信息 </h2>
+                    <h2  style="padding-right:400px ;"> 最新版本信息 </h2>
                     <!--右边三个图标的HTML-->
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -349,7 +352,27 @@ String basePath = request.getScheme() + "://"
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="version">版本号<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="version" readonly value="${version.versionno }" class="form-control col-md-7 col-xs-12" name="version">
+                        <% 
+                        ApplicationContext ac= new ClassPathXmlApplicationContext("applicationContext-mybatis.xml");
+    					VersionService vs =  (VersionService)ac.getBean("versionService");
+                        
+                        %>
+                              <c:if test="${info.versionid != null}">
+                               <c:set var="noop" value="${info.versionid }" scope="request"></c:set>  
+                            <%
+                           
+                              Object abc = request.getAttribute("noop");
+                             int id = Integer.parseInt(abc.toString());
+                           String v_No =  vs.getVersions(id);
+                         
+                              %> 
+                                <input type="text" id="version" readonly value="<%=v_No %>" class="form-control col-md-7 col-xs-12" name="version">
+                              </c:if>
+                              
+                               <c:if test="${info.versionid == null}">
+                               <input type="text" id="version" readonly value="" class="form-control col-md-7 col-xs-12" name="version">
+                              </c:if>
+                        
                         </div>
                       </div>
                       <div class="form-group">
@@ -363,9 +386,12 @@ String basePath = request.getScheme() + "://"
                       <div class="form-group">
                         <label for="versionStatus" class="control-label col-md-3 col-sm-3 col-xs-12">发布状态<span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                       
-                        <input id="versionStatus" class="form-control col-md-7 col-xs-12" readonly value="<%=s6 %>"   type="text" name="versionStatus">
-                         
+                        <c:if test="${info.versionid != null}">
+                              <input id="versionStatus" class="form-control col-md-7 col-xs-12" readonly value="<%=s6 %>"   type="text" name="versionStatus">
+                              </c:if>
+                              <c:if test="${info.versionid == null}">
+                              <input id="versionStatus" class="form-control col-md-7 col-xs-12" readonly value=""  type="text" name="versionStatus">
+                              </c:if>
                           
                         </div>
                       </div>

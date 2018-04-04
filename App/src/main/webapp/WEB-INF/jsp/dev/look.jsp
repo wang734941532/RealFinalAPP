@@ -311,10 +311,8 @@ String basePath = request.getScheme() + "://"
 				<button type="submit" class="btn btn-success"><a href="${pageContext.request.contextPath }/dev/maintenance">返回</a></button>
 												</div>
 											</div>
-						<form action="${pageContext.request.contextPath }/download" method="get">
-					   	<input type="hidden" name="fileName" value="${version.apkfilename }" />
-					 	<button type="submit" >下载 </button>
-					   </form>
+						
+					   <a href="${pageContext.request.contextPath }/download?fileName=${version.apkfilename }">下载</a>
               		
               		 
                   <div class="x_title"><!--题目3title-->

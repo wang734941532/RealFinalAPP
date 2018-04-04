@@ -56,6 +56,8 @@ public interface InformationMapper {
   
   int updateAppByPK(Information information);
   
+  int getTotalInfo();
+  
   
     
     

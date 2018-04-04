@@ -37,5 +37,7 @@ public interface InfoService {
 	  int insertSelective(Information record);
 	  
 	  int updateAppByPK(Information information);
+	  
+	  int getTotalInfo();
 	 
 } 

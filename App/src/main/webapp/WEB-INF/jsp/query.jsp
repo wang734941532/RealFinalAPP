@@ -1,3 +1,5 @@
+<%@page import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="cn.app.service.VersionServiceImpl"%>
@@ -382,7 +384,12 @@
                       
                       
                       <!--展示待审核数据  -->
-
+			<% 
+			 Map map = (HashMap)session.getAttribute("map");
+			ApplicationContext ac= new ClassPathXmlApplicationContext("applicationContext-mybatis.xml");
+			VersionService vs =  (VersionService)ac.getBean("versionService"); 
+			
+			%>
   				<c:forEach items="${queryList }" var="query" varStatus="i">
   				    
   				<div class="col-md-4 col-sm-4 col-xs-12 profile_details">
@@ -395,7 +402,7 @@
                               <c:set var="so2" value="${query.categorylevel2 }" scope="session"></c:set>
                               <c:set var="so3" value="${query.categorylevel3 }" scope="session"></c:set>
                               <% 
-                              Map map = (HashMap)session.getAttribute("map");
+                             
                                Object a = session.getAttribute("so1");
                                Object b = session.getAttribute("so2");
                                Object c = session.getAttribute("so3");
@@ -411,13 +418,33 @@
                               </ul>
                             </div>
                             <div class="right col-xs-5 text-center">
-                              <img src="${query.logopicpath }" alt="" class="img-circle img-responsive">
+                              <img src="${query.logopicpath }" alt="" class="img-circle img-responsive" style="width:100px;">
                             </div>
                           </div>
                           <div class="col-xs-12 bottom text-center">
                             <div class="col-xs-12 col-sm-6 emphasis">
                               <p class="ratings">
-                                <a>版本号:${query.version.versionno }</a>
+                              
+                               <c:if test="${query.versionid != null}">
+                              
+                              <c:set var="no" value="${query.versionid }" scope="session"></c:set> 
+                              
+                               <%
+                           
+                             Object abc = session.getAttribute("no");
+                             int id = Integer.parseInt(abc.toString());
+                          	 String v_No =  vs.getVersions(id);
+                             
+                              %> 
+                              
+                                <a>版本号:<%=v_No %></a>
+                                </c:if>
+                                
+                                <c:if test="${query.versionid == null}">
+                               <a>版本号:暂无</a>
+                              </c:if>
+                                
+                                
                                 <span></span>
                               </p>
                             </div>

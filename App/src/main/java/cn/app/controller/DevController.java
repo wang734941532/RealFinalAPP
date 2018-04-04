@@ -156,9 +156,11 @@ public class DevController {
 				int now_page ;
 				try {
 					infoList = infoService.getInfoList(pageCount, pageSize);
+System.out.println(infoList.size());
 					model.addAttribute("infoList", infoList);
 					
-					TotalCount = infoService.getInfoCount();
+					TotalCount = infoService.getTotalInfo();
+System.out.println(TotalCount);
 					totalPages = (TotalCount%pageSize > 0) ? TotalCount/pageSize +1 : TotalCount/pageSize;
 					
 					now_page =pageCount + 1;
@@ -275,7 +277,7 @@ public class DevController {
 					infoList = infoService.getInfoList(pageCount, pageSize);
 					model.addAttribute("infoList", infoList);
 					
-					TotalCount = infoService.getInfoCount();
+					TotalCount = infoService.getTotalInfo();
 					totalPages = (TotalCount%pageSize > 0) ? TotalCount/pageSize +1 : TotalCount/pageSize;
 					
 					now_page =pageCount + 1;
@@ -301,30 +303,6 @@ public class DevController {
 		
 				return "dev/dev_app_maintenance1";	
 			}
-	
-	
-	
-	
-	
-	@RequestMapping("/add")
-	public String add() {
-	return "dev/app_add";	
-	}
-	
-	@RequestMapping("/modify")
-	public String modify() {
-	return "dev/modify_app";	
-	}
-	@RequestMapping("/add_version")
-	public String add_version() {
-	return "dev/add_version";	
-	}
-	
-	@RequestMapping("/modify_version")
-	public String modify_version() {
-	return "dev/modify_version";	
-	}
-	
 	
 	
 	@RequestMapping("/look")
@@ -406,7 +384,7 @@ public class DevController {
 		int now_page =p ;
 		try {
 			
-			TotalCount = infoService.getInfoCount();
+			TotalCount = infoService.getTotalInfo();
 			totalPages = (TotalCount%pageSize > 0) ? TotalCount/pageSize +1 : TotalCount/pageSize;
 			pageCount = pageSize*(now_page-1);
 			
@@ -507,14 +485,6 @@ public class DevController {
 		
 		Version v = null;
 		
-		/*System.out.println(id);
-		
-		System.out.println(versionNo);
-		System.out.println(versionSize);
-		
-		System.out.println(pubStatus);
-		
-		System.out.println(versionInfo);*/
 		
 		String myPath = null;
 		  //如果文件不为空，写入上传路径
@@ -526,6 +496,7 @@ public class DevController {
             String realpath = request.getContextPath() + "/statics/img";
             //上传文件名
             String filename = file.getOriginalFilename();
+            System.out.println(filename+"=================filename");
             File filepath = new File(path,filename);
             //判断路径是否存在，如果不存在就创建一个
             if (!filepath.getParentFile().exists()) { 
@@ -536,8 +507,6 @@ public class DevController {
             	myPath = path + File.separator + filename;
             	lowpath = realpath + File.separator + filename;
 				file.transferTo(new File(path + File.separator + filename));
-				System.out.println(myPath+"======*****");
-				System.out.println(lowpath+"======*****");
 				
 				v = new Version();
 				v.setAppid(id);
@@ -548,7 +517,7 @@ public class DevController {
 				v.setVersioninfo(versionInfo);
 				v.setDownloadlink(lowpath);
 				v.setApklocpath(myPath);
-				v.setApkfilename(engname);
+				v.setApkfilename(filename);
 				v.setCreationdate(new Date());
 				Long  p = 1L; 
 				v.setCreatedby(p);

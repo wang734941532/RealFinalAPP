@@ -305,34 +305,37 @@
                        		 
 											<!--               ------ -->
 										
+											<%
 											
-											<c:forEach items="${infoList }" var="info" varStatus="i">
+											 //APP分类索引
+				                              Map map = (HashMap)session.getAttribute("map");
+												 
+				                              //APP平台
+												 Map plamap = (HashMap)session.getAttribute("plaMap");
+				                              
+												 //APP状态
+				                              Map dicMap = (HashMap)session.getAttribute("dicMap");
 											
-											 <c:set var="so1" value="${info.categorylevel1 }" scope="session"></c:set>
+											%>
+											
+				     <c:forEach items="${infoList }" var="info" varStatus="i">
+											
+							 <c:set var="so1" value="${info.categorylevel1 }" scope="session"></c:set>
                               <c:set var="so2" value="${info.categorylevel2 }" scope="session"></c:set>
                               <c:set var="so3" value="${info.categorylevel3 }" scope="session"></c:set>
                              
                               <c:set var="so4" value="${info.flatformid +10 }"  scope="session"></c:set>
                       			
-                            <c:set var="so5" value="${info.status }"  scope="session"></c:set>
+                              <c:set var="so5" value="${info.status }"  scope="session"></c:set>
 										
 										
 									 <% 
-								 //APP分类索引
-                              Map map = (HashMap)session.getAttribute("map");
-								 
-                              //APP平台
-								 Map plamap = (HashMap)session.getAttribute("plaMap");
-                              
-								 //APP状态
-                              Map dicMap = (HashMap)session.getAttribute("dicMap");
-                              
-                              Object a = session.getAttribute("so1");
+                               Object a = session.getAttribute("so1");
                                Object b = session.getAttribute("so2");
                                Object c = session.getAttribute("so3");
                                
-                           	  Object d = (Object)session.getAttribute("so4");
-                           	 Object e = (Object)session.getAttribute("so5");
+                           	   Object d = (Object)session.getAttribute("so4");
+                           	   Object e = (Object)session.getAttribute("so5");
                            		
                                	Object s1 =  map.get(a);
                             	Object s2 =  map.get(b);

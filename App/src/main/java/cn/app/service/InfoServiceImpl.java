@@ -128,4 +128,10 @@ public class InfoServiceImpl implements InfoService {
 		return informationMapper.updateAppByPK(information);
 	}
 
+
+	@Override
+	public int getTotalInfo() {
+		return informationMapper.getTotalInfo();
+	}
+
 }

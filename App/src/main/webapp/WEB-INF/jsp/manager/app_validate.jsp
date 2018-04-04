@@ -249,7 +249,7 @@
                               </ul>
                             </div>
                             <div class="right col-xs-5 text-center">
-                              <img src="${info.logopicpath }" alt="" class="img-circle img-responsive">
+                              <img src="${info.logopicpath }" alt="" class="img-circle img-responsive" style="width:100px;">
                             </div>
                           </div>
                           <div class="col-xs-12 bottom text-center">

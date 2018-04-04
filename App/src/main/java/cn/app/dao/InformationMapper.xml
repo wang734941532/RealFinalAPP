@@ -48,13 +48,13 @@
  </if>
  
    <if  test="sort1 != null ">
-      or categoryLevel1 = #{sort1}
+      and categoryLevel1 = #{sort1}
      </if>
    <if  test="sort2 != null ">
-     or categoryLevel2 = #{sort2}
+     and categoryLevel2 = #{sort2}
      </if>
    <if  test="sort3 != null ">
-      or categoryLevel3 = #{sort3}
+      and categoryLevel3 = #{sort3}
      </if>
   </where>
  
@@ -95,26 +95,60 @@ categoryLevel1,categoryLevel2,categoryLevel3,status, appInfo,logoPicPath,logoLoc
 
 
 </insert>
-
-
-
 <update id="updateAppByPK"  parameterType="Information">
-<if test="logopicpath ==null">
-UPDATE  app_info SET softwareName =#{softwarename},APKName = #{apkname},supportROM = #{supportrom},
-  interfaceLanguage = #{interfacelanguage},softwareSize = #{softwaresize},downloads = #{downloads},
-  flatformId =#{flatformid},categoryLevel1 = #{categorylevel1},categoryLevel2 = #{categorylevel2},
-  categoryLevel3 =#{categorylevel3},status =#{status}, appInfo =#{appinfo} WHERE id = #{id}
-
-
+UPDATE  app_info 
+<set>
+<if test="softwarename != null ">
+ softwareName =#{softwarename},
 </if>
-<if test="logopicpath !=null">
-UPDATE  app_info SET softwareName =#{softwarename},  APKName = #{apkname},supportROM = #{supportrom},
-  interfaceLanguage = #{interfacelanguage},softwareSize = #{softwaresize},downloads = #{downloads},
-  flatformId =#{flatformid},categoryLevel1 = #{categorylevel1},categoryLevel2 = #{categorylevel2},
-  categoryLevel3 =#{categorylevel3},status =#{status},appInfo =#{appinfo},
-logoPicPath = #{logopicpath},logoLocPath =#{logolocpath} WHERE id = #{id}
 
+<if test="apkname != null ">
+ APKName = #{apkname},
 </if>
+<if test="supportrom != null ">
+ supportROM = #{supportrom},
+</if>
+<if test="interfacelanguage != null ">
+ interfaceLanguage = #{interfacelanguage},
+</if>
+<if test="softwaresize != null ">
+ softwareSize = #{softwaresize},
+</if>
+<if test="downloads != null ">
+  downloads = #{downloads},
+</if>
+<if test="flatformid != null ">
+  flatformId =#{flatformid},
+</if>
+
+<if test="categorylevel1 != null ">
+  categoryLevel1 = #{categorylevel1},
+</if>
+<if test="categorylevel2 != null ">
+  categoryLevel2 = #{categorylevel2},
+</if>
+<if test="categorylevel3 != null ">
+ categoryLevel3 =#{categorylevel3},
+</if>
+<if test="status != null ">
+ status =#{status},
+</if>
+<if test="appinfo != null ">
+  appInfo =#{appinfo}
+</if>
+
+</set>
+   WHERE id = #{id}
+
 </update>
+
+
+<select id="getTotalInfo" resultType="int">
+
+   SELECT COUNT(1) FROM app_info 
+
+</select>
+
+
   
 </mapper>

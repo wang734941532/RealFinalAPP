@@ -384,9 +384,9 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         		<select id="sort1" name="sort1" data-validate-length="6,8" class="form-control col-md-7 col-xs-12">
                         			<option selected>--请选择--</option>
-                        			<option>手机</option>
-                        			<option>平板</option>
-                        			<option>手表</option> 
+                        			<option>--请选择--</option>
+                        			<option>--请选择--</option>
+                        			<option>--请选择--</option> 
                         	</select>
                         </div>
                       </div>
@@ -396,9 +396,9 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         		<select id="sort2" name="sort2" data-validate-length="6,8" class="form-control col-md-7 col-xs-12">
                         			<option selected>--请选择--</option>
-                        			<option>手机</option>
-                        			<option>平板</option>
-                        			<option>手表</option> 
+                        			<option>--请选择--</option>
+                        			<option>--请选择--</option>
+                        			<option>--请选择--</option> 
                         	</select>
                         </div>
                       </div>
@@ -409,9 +409,9 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         		<select id="sort3" name="sort3" data-validate-length="6,8" class="form-control col-md-7 col-xs-12">
                         			<option selected>--请选择--</option>
-                        			<option>手机</option>
-                        			<option>平板</option>
-                        			<option>手表</option> 
+                        			<option>--请选择--</option>
+                        			<option>--请选择--</option>
+                        			<option>--请选择--</option> 
                         	</select>
                         </div>
                       </div>
@@ -423,7 +423,8 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="state">APP状态 <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="state" name="state" placeholder="待审核" value="1" readonly data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
+                         <input type="hidden" id="state" name="state" placeholder="待审核" value="1" >
+                          <input type="text" id="" name=""  value="待审核" readonly data-validate-length-range="8,20" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       
